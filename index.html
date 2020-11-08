@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Kagamine</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"/>
+</head>
+
+<body class="mdui-appbar-with-toolbar  mdui-theme-primary-pink mdui-theme-accent-pink">
+    
+<body>
+<div id='imgBox' class="mdui-container" style="max-width: 400px; ">
+    <br><br><br><br>
+        <div class="mdui-card">
+            <div class="mdui-card-media">
+                <img id='imgSrc' src=""/>
+                <div class="mdui-card-media-covered">
+                    <div class="mdui-card-primary">
+                        <div id='imgName' class="mdui-card-primary-title">加载中...</div>
+                        <div id='imgUrl' class="mdui-card-primary-subtitle">正在加载链接中</div>
+                    </div>
+                </div>
+            </div>
+            <div id='Remind'><div class="mdui-card-content"><center>正在加载图片中...<br>您可以点击‘查看原图’在您的浏览器中直接查看图片！</center></div></div>
+            <div class="mdui-card-actions">
+                <a id='Source_Img' target="_blank" class="mdui-btn mdui-color-theme-accent mdui-ripple" href="">查看原图</a>
+                <button onclick='image_get()' class="mdui-btn mdui-color-theme-accent mdui-ripple">刷新图片</button>
+            </div>
+        </div>
+    <br><br><br><br>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"></script>
+</body>
+</html>
+
+<script>
+    image_get();
+    function image_get(){
+        mdui.snackbar({
+          message: '正在获取图片链接...'
+        });
+        var xhr = new XMLHttpRequest ( ) ;
+    
+        xhr.onreadystatechange = function(){
+            switch(xhr.readyState){
+                case 4 : 
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                        img_name=JSON.parse(xhr.responseText)['file_name'][RandomNumBoth(0,JSON.parse(xhr.responseText)['file_num'])];
+                        document.getElementById("imgName").innerHTML=img_name;
+                        img_url="https://cdn.llilii.cn/image/kagamine/"+img_name;
+                        document.getElementById("imgUrl").innerHTML=img_url;
+                        document.getElementById("Source_Img").href=img_url;
+                        mdui.snackbar({
+                          message: '获取图片链接['+img_url+']成功！'
+                        });
+                        checkPicurl(img_url);
+                    }
+                    break;
+            }
+        }
+        xhr.open('get','https://cdn.llilii.cn/image/kagamine/img_list.json');
+        xhr.send(null);
+    }
+    
+    function RandomNumBoth(Min,Max){
+        var Range = Max - Min;
+        var Rand = Math.random();
+        var num = Min + Math.round(Rand * Range); //四舍五入
+        return num;
+    }
+    
+    function checkPicurl(url){
+        mdui.snackbar({
+            message: '正在加载图片中...',
+        });
+        var img = new Image();
+        img.src = url;
+        img.onerror = function(){
+            mdui.alert(name+" 图片加载失败，请检查url是否正确");
+            return false;
+        };
+    
+        if(img.complete){
+            console.log(img.width+" "+img.height);
+        }else{
+            img.onload = function(){
+                document.getElementById("imgBox").style="max-width: "+img.width+'px;';
+                document.getElementById("imgSrc").src=url;
+                document.getElementById("Remind").innerHTML='';
+                console.log(img.width+" "+img.height);
+                img.onload=null;//避免重复加载
+            }
+        }
+    }
+</script>
