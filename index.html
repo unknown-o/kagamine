@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>Kagamine</title>
+    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
+    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+</head>
+
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div id="page-index" class="mdui-container">
+        <div class="mdui-row-xs-2 mdui-row-gapless">
+            <div class="mdui-col" id="imageBoxCol-0">
+            </div>
+            <div class="mdui-col" id="imageBoxCol-1"><br><br><br></div>
+        </div>
+    </div>
+    <div style="display: none;">
+        <div id="imageBoxTemplate">
+            <div id="imgBoxId-main" style="display: none;" class="mdui-card">
+                <div class="mdui-card-media">
+                    <img id='imgBoxId-imageSrc' src="" />
+                    <div class="mdui-card-media-covered">
+                        <!--
+                        <div class="mdui-card-primary">
+                            <div id='imgName' class="mdui-card-primary-title">加载中...</div>
+                            <div id='imgUrl' class="mdui-card-primary-subtitle">正在加载链接中</div>
+                        </div>
+                         -->
+                    </div>
+                </div>
+                <div id='imgBoxId-remind'>
+                    <div class="mdui-card-content">
+                        <center><img src="https://static.llilii.cn/images/other/loading.png" /></center><br>
+                        <div class="mdui-progress">
+                            <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+                <div class="mdui-card-actions">
+                    <a id='sourceImg' target="_blank" class="mdui-btn mdui-color-theme-accent mdui-ripple" href="">查看原图</a>
+                    <button onclick='image_get()' class="mdui-btn mdui-color-theme-accent mdui-ripple">刷新图片</button>
+                </div>
+                -->
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+
+    window.imgListURL = "https://static.llilii.cn/json/img_list.json"
+    window.imgBaseURL = "https://img.llilii.cn/kagamine/"
+    //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
+    //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
+
+    $.get(imgListURL, function (rdata) {
+        window.imgList = rdata
+        for (i = 0; i < 10; i++) {
+            imgBoxCreate(i % 2)
+        }
+    });
+
+    function randomNumBoth(Min, Max) {
+        var Range = Max - Min;
+        var Rand = Math.random();
+        var num = Min + Math.round(Rand * Range);
+        return num;
+    }
+
+
+    function loadImage(imgURL, imgBoxId, callback) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', imgURL);
+        xhr.onprogress = function (event) {
+            if (event.lengthComputable) {
+                document.getElementById(imgBoxId.toString() + "-loadingStatus").style = 'width: ' + parseInt((event.loaded / event.total) * 100).toString() + '%;';
+            }
+        };
+        xhr.onreadystatechange = function () {
+            switch (xhr.readyState) {
+                case 4:
+                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                        console.log(imgURL)
+                        callback(imgBoxId, imgURL)
+                    } else {
+                        mdui.alert(name + "抱歉，图片加载失败！");
+                    }
+            }
+        };
+        xhr.send();
+    }
+
+    function imgBoxCreate(colId) {
+
+        imgBoxId = randomNumBoth(100000, 99999999)
+        imageBoxTemplate = $("#imageBoxTemplate").html()
+        imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId)
+        $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
+        $("#" + imgBoxId.toString() + "-main").show(200)
+        imgURL = imgBaseURL + imgList['file_name'][randomNumBoth(0, imgList['file_num'])]
+        $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
+        $("#" + imgBoxId.toString() + "-imageSrc").hide()
+        loadImage(imgURL, imgBoxId, function (imgBoxId1, imgURL) {
+            console.log(imgBoxId1)
+            $("#" + imgBoxId1.toString() + "-imageSrc").show()
+            $("#" + imgBoxId1.toString() + "-remind").hide()
+
+        })
+
+    }
+</script>
