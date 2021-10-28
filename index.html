@@ -32,7 +32,7 @@
         <div id="imageBoxTemplate">
             <div id="imgBoxId-main" style="display: none;" class="mdui-card">
                 <div class="mdui-card-media">
-                    <img id='imgBoxId-imageSrc' src="" />
+                <img onclick="window.open(this.src)" id='imgBoxId-imageSrc' src="" />
                     <div class="mdui-card-media-covered">
                         <!--
                         <div class="mdui-card-primary">
@@ -52,12 +52,6 @@
                         </div>
                     </div>
                 </div>
-                <!--
-                <div class="mdui-card-actions">
-                    <a id='sourceImg' target="_blank" class="mdui-btn mdui-color-theme-accent mdui-ripple" href="">查看原图</a>
-                    <button onclick='image_get()' class="mdui-btn mdui-color-theme-accent mdui-ripple">刷新图片</button>
-                </div>
-                -->
             </div>
         </div>
 
