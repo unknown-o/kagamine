@@ -13,11 +13,17 @@
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
-    <div id="page-index" class="mdui-container">
+    <div id="page-index" class="mdui-container" style="max-width: 800px;">
+        <h1 class="doc-title mdui-text-color-theme">Kagamine</h1>
+
+        <div class="doc-chapter">
+          <div class="mdui-typo">
+            <p>在这里，你可以以瀑布流的形式查看图片</p>
+          </div>
+        </div><br>
         <div class="mdui-row-xs-2 mdui-row-gapless">
-            <div class="mdui-col" id="imageBoxCol-0">
-            </div>
-            <div class="mdui-col" id="imageBoxCol-1"><br><br><br></div>
+            <div class="mdui-col" id="imageBoxCol-0"></div>
+            <div class="mdui-col" id="imageBoxCol-1"><br></div>
         </div>
     </div>
     <div style="display: none;">
@@ -34,9 +40,11 @@
                          -->
                     </div>
                 </div>
-                <div id='imgBoxId-remind'>
-                    <div class="mdui-card-content">
-                        <center><img src="https://static.llilii.cn/images/other/loading.png" /></center><br>
+                <div id='imgBoxId-loadingBox'>
+                    <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
+
+                        <h2>LOADING</h2>
+                        <br>
                         <div class="mdui-progress">
                             <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
                         </div>
@@ -76,7 +84,6 @@
 
 
     function loadImage(imgURL, imgBoxId, callback) {
-
         var xhr = new XMLHttpRequest();
         xhr.open('GET', imgURL);
         xhr.onprogress = function (event) {
@@ -99,7 +106,6 @@
     }
 
     function imgBoxCreate(colId) {
-
         imgBoxId = randomNumBoth(100000, 99999999)
         imageBoxTemplate = $("#imageBoxTemplate").html()
         imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId)
@@ -108,12 +114,35 @@
         imgURL = imgBaseURL + imgList['file_name'][randomNumBoth(0, imgList['file_num'])]
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
         $("#" + imgBoxId.toString() + "-imageSrc").hide()
-        loadImage(imgURL, imgBoxId, function (imgBoxId1, imgURL) {
-            console.log(imgBoxId1)
-            $("#" + imgBoxId1.toString() + "-imageSrc").show()
-            $("#" + imgBoxId1.toString() + "-remind").hide()
+        if (isMobile()) {
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200
+            ).toString() + "px")
+        } else {
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(400, 600
+            ).toString() + "px")
+        }
 
+        loadImage(imgURL, imgBoxId, function (imgBoxId, imgURL) {
+            $("#" + imgBoxId.toString() + "-imageSrc").show()
+            $("#" + imgBoxId.toString() + "-loadingBox").hide()
         })
+    }
 
+    function isMobile() {
+        var userAgentInfo = navigator.userAgent;
+        var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+        var mobile_flag = false;
+        for (var v = 0; v < mobileAgents.length; v++) {
+            if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+                mobile_flag = true;
+                break;
+            }
+        }
+        var screen_width = window.screen.width;
+        var screen_height = window.screen.height;
+        if (screen_width < 500 && screen_height < 800) {
+            mobile_flag = true;
+        }
+        return mobile_flag;
     }
 </script>
