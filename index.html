@@ -24,7 +24,8 @@
         <div class="mdui-row-xs-2 mdui-row-gapless">
             <div class="mdui-col" id="imageBoxCol-0"></div>
             <div class="mdui-col" id="imageBoxCol-1"><br></div>
-        </div>
+        </div><br>
+        <center><button onclick="loadMore()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button></center>
     </div>
     <div style="display: none;">
         <div id="imageBoxTemplate">
@@ -70,10 +71,14 @@
 
     $.get(imgListURL, function (rdata) {
         window.imgList = rdata
+        loadMore()
+    });
+
+    function loadMore(){
         for (i = 0; i < 10; i++) {
             imgBoxCreate(i % 2)
         }
-    });
+    }
 
     function randomNumBoth(Min, Max) {
         var Range = Max - Min;
@@ -82,6 +87,23 @@
         return num;
     }
 
+    function isMobile() {
+        var userAgentInfo = navigator.userAgent;
+        var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+        var mobile_flag = false;
+        for (var v = 0; v < mobileAgents.length; v++) {
+            if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+                mobile_flag = true;
+                break;
+            }
+        }
+        var screen_width = window.screen.width;
+        var screen_height = window.screen.height;
+        if (screen_width < 500 && screen_height < 800) {
+            mobile_flag = true;
+        }
+        return mobile_flag;
+    }
 
     function loadImage(imgURL, imgBoxId, callback) {
         var xhr = new XMLHttpRequest();
@@ -126,23 +148,5 @@
             $("#" + imgBoxId.toString() + "-imageSrc").show()
             $("#" + imgBoxId.toString() + "-loadingBox").hide()
         })
-    }
-
-    function isMobile() {
-        var userAgentInfo = navigator.userAgent;
-        var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
-        var mobile_flag = false;
-        for (var v = 0; v < mobileAgents.length; v++) {
-            if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
-                mobile_flag = true;
-                break;
-            }
-        }
-        var screen_width = window.screen.width;
-        var screen_height = window.screen.height;
-        if (screen_width < 500 && screen_height < 800) {
-            mobile_flag = true;
-        }
-        return mobile_flag;
     }
 </script>
