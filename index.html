@@ -81,10 +81,10 @@
         }
     }
 
-    function randomNumBoth(Min, Max) {
-        var Range = Max - Min;
-        var Rand = Math.random();
-        var num = Min + Math.round(Rand * Range);
+    function randomNumBoth(min, max) {
+        var range = max - min;
+        var rand = Math.random();
+        var num = min + Math.round(rand * range);
         return num;
     }
 
@@ -111,7 +111,7 @@
         xhr.open('GET', imgURL);
         xhr.onprogress = function (event) {
             if (event.lengthComputable) {
-                document.getElementById(imgBoxId.toString() + "-loadingStatus").style = 'width: ' + parseInt((event.loaded / event.total) * 100).toString() + '%;';
+                $("#" + imgBoxId.toString() + "-loadingStatus").css("width", parseInt((event.loaded / event.total) * 100).toString() + "%")
             }
         };
         xhr.onreadystatechange = function () {
@@ -121,7 +121,10 @@
                         console.log(imgURL)
                         callback(imgBoxId, imgURL)
                     } else {
-                        mdui.alert(name + "抱歉，图片加载失败！");
+                        mdui.snackbar({
+                            message: '抱歉，图片加载失败！',
+                            position: 'left-top'
+                        });
                     }
             }
         };
