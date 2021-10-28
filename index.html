@@ -17,15 +17,16 @@
         <h1 class="doc-title mdui-text-color-theme">Kagamine</h1>
 
         <div class="doc-chapter">
-          <div class="mdui-typo">
-            <p>在这里，你可以以瀑布流的形式查看图片</p>
-          </div>
+            <div class="mdui-typo">
+                <p>在这里，你可以以瀑布流的形式查看图片</p>
+            </div>
         </div><br>
         <div class="mdui-row-xs-2 mdui-row-gapless">
             <div class="mdui-col" id="imageBoxCol-0"></div>
             <div class="mdui-col" id="imageBoxCol-1"><br></div>
         </div><br>
-        <center><button onclick="loadMore()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button></center>
+        <center><button onclick="loadMore()"
+                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button></center>
     </div>
     <div style="display: none;">
         <div id="imageBoxTemplate">
@@ -74,7 +75,7 @@
         loadMore()
     });
 
-    function loadMore(){
+    function loadMore() {
         for (i = 0; i < 10; i++) {
             imgBoxCreate(i % 2)
         }
@@ -90,19 +91,19 @@
     function isMobile() {
         var userAgentInfo = navigator.userAgent;
         var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
-        var mobile_flag = false;
+        var mobileFlag = false;
         for (var v = 0; v < mobileAgents.length; v++) {
             if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
-                mobile_flag = true;
+                mobileFlag = true;
                 break;
             }
         }
-        var screen_width = window.screen.width;
-        var screen_height = window.screen.height;
-        if (screen_width < 500 && screen_height < 800) {
-            mobile_flag = true;
+        var screenWidth = window.screen.width;
+        var screenHeight = window.screen.height;
+        if (screenWidth < 500 && screenHeight < 800) {
+            mobileFlag = true;
         }
-        return mobile_flag;
+        return mobileFlag;
     }
 
     function loadImage(imgURL, imgBoxId, callback) {
@@ -132,18 +133,15 @@
         imageBoxTemplate = $("#imageBoxTemplate").html()
         imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId)
         $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
-        $("#" + imgBoxId.toString() + "-main").show(200)
         imgURL = imgBaseURL + imgList['file_name'][randomNumBoth(0, imgList['file_num'])]
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
         $("#" + imgBoxId.toString() + "-imageSrc").hide()
         if (isMobile()) {
-            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200
-            ).toString() + "px")
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200).toString() + "px")
         } else {
-            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(400, 600
-            ).toString() + "px")
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(400, 600).toString() + "px")
         }
-
+        $("#" + imgBoxId.toString() + "-main").show(200)
         loadImage(imgURL, imgBoxId, function (imgBoxId, imgURL) {
             $("#" + imgBoxId.toString() + "-imageSrc").show()
             $("#" + imgBoxId.toString() + "-loadingBox").hide()
