@@ -175,6 +175,7 @@
     }
 
     function autoLoadImage() {
+        loadingCount += 1
         if ($("#imageBoxCol-0").height() - $("#imageBoxCol-1").height() > 50) {
             imgBoxCreate(1)
         } else {
@@ -253,7 +254,9 @@
         xhr.onreadystatechange = function () {
             switch (xhr.readyState) {
                 case 4:
-                    loadingCount -= 1
+                    if (loadingCount > 0) {
+                        loadingCount -= 1
+                    }
                     loadingStatus()
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                         console.log(imgURL)
