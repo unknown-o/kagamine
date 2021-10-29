@@ -260,7 +260,6 @@
                     }
                     loadingStatus()
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                        console.log(imgURL)
                         callback(imgBoxId, imgURL)
                     } else {
                         mdui.snackbar({
