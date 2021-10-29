@@ -37,6 +37,30 @@
                             <input id="showLoadingStatus" type="checkbox" checked />
                             <i class="mdui-switch-icon"></i>
                         </label>
+                        <div class="mdui-panel mdui-panel-popout" mdui-panel>
+                            <div class="mdui-panel-item">
+                                <div class="mdui-panel-item-header">
+                                    <div class="mdui-panel-item-title">高级设置</div>
+                                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                                </div>
+                                <div class="mdui-panel-item-body">
+                                    <div class="mdui-textfield mdui-textfield-floating-label">
+                                        <label class="mdui-textfield-label">图像列表</label>
+                                        <input id="imgListURL" class="mdui-textfield-input" type="text" />
+                                    </div>
+                                    <div class="mdui-textfield mdui-textfield-floating-label">
+                                        <label class="mdui-textfield-label">图像基础地址</label>
+                                        <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
+                                    </div>
+                                    <div class="mdui-card-primary-subtitle">这些设置刷新后还原！</div>
+                                    <div class="mdui-panel-item-actions">
+                                        <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
+                                        <button onclick="saveAdvancedSettings()"
+                                            class="mdui-btn mdui-ripple">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -70,15 +94,14 @@
 
     window.imgListURL = "https://static.llilii.cn/json/img_list.json"
     window.imgBaseURL = "https://img.llilii.cn/kagamine/"
+    $("#imgListURL").val(imgListURL)
+    $("#imgBaseURL").val(imgBaseURL)
     if (getCookie("showLoadingStatus") == "") {
         window.showLoadingStatus = true
+        window.showImageDirect = true
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
         $("#showLoadingStatus").attr("checked", showLoadingStatus);
-    }
-    if (getCookie("showImageDirect") == "") {
-        window.showImageDirect = true
-    } else {
         window.showImageDirect = (getCookie("showImageDirect") == "true")
         $("#showImageDirect").attr("checked", showImageDirect);
         $("#showLoadingStatus").attr("disabled", showImageDirect)
@@ -91,6 +114,18 @@
         window.imgList = rdata
         loadMore()
     });
+
+    function saveAdvancedSettings() {
+        window.imgListURL = $("#imgListURL").val()
+        window.imgBaseURL = $("#imgBaseURL").val()
+        $.get(imgListURL, function (rdata) {
+            window.imgList = rdata
+        });
+        mdui.snackbar({
+            message: '保存成功！',
+            position: 'right-top'
+        });
+    }
 
     function loadMore() {
         for (i = 0; i < loadImageNumber - 1; i++) {
