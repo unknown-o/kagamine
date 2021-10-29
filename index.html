@@ -31,8 +31,7 @@
                             <input id="showImageDirect" type="checkbox" />
                             <i class="mdui-switch-icon"></i>
                         </label>
-                        <br>
-                        显示加载进度条：
+                        <br> 显示加载进度条：
                         <label class="mdui-switch">
                             <input id="showLoadingStatus" type="checkbox" checked />
                             <i class="mdui-switch-icon"></i>
@@ -89,16 +88,8 @@
     </div>
 </body>
 <script>
-
-
-
     if (getCookie("showLoadingStatus") == "") {
-        window.showLoadingStatus = true
-        window.showImageDirect = true
-        window.imgListURL = "https://static.llilii.cn/json/img_list.json"
-        window.imgBaseURL = "https://img.llilii.cn/kagamine/"
-        $("#imgListURL").val(imgListURL)
-        $("#imgBaseURL").val(imgBaseURL)
+        setDefaultSettings()
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
         $("#showLoadingStatus").attr("checked", showLoadingStatus)
@@ -113,11 +104,31 @@
     window.loadImageNumber = 10
     //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
     //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
-    if(imgListURL==""||imgListURL==null||imgListURL==undefined)
-    $.get(imgListURL, function (rdata) {
-        window.imgList = rdata
-        loadMore()
-    });
+    if (imgListURL == "" || imgListURL == null || imgListURL == undefined) {
+        setDefaultSettings()
+        mdui.snackbar({
+            message: '加载图片列表失败！请刷新重试！',
+            position: 'right-top'
+        });
+    } else {
+        $.get(imgListURL, function (rdata) {
+            window.imgList = rdata
+            loadMore()
+        });
+    }
+
+    function setDefaultSettings() {
+        window.showLoadingStatus = true
+        window.showImageDirect = false
+        window.imgListURL = "https://static.llilii.cn/json/img_list.json"
+        window.imgBaseURL = "https://img.llilii.cn/kagamine/"
+        $("#imgListURL").val(imgListURL)
+        $("#imgBaseURL").val(imgBaseURL)
+        setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
+        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
+        setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgBaseURL", imgBaseURL, 30)
+    }
 
     function saveAdvancedSettings() {
         window.imgListURL = $("#imgListURL").val()
