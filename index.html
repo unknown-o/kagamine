@@ -39,6 +39,11 @@
                             <input id="showLoadingStatus" type="checkbox" checked />
                             <i class="mdui-switch-icon"></i>
                         </label>
+                        <br> 自动加载图片补位：
+                        <label class="mdui-switch">
+                            <input id="autoLoadImages" type="checkbox" checked />
+                            <i class="mdui-switch-icon"></i>
+                        </label>
                         <div class="mdui-panel mdui-panel-popout" mdui-panel>
                             <div class="mdui-panel-item">
                                 <div class="mdui-panel-item-header">
@@ -96,8 +101,10 @@
         setDefaultSettings()
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
-        $("#showLoadingStatus").attr("checked", showLoadingStatus)
         window.showImageDirect = (getCookie("showImageDirect") == "true")
+        window.autoLoadImages = (getCookie("autoLoadImages") == "true")
+        $("#showLoadingStatus").attr("checked", showLoadingStatus)
+        $("#autoLoadImages").attr("checked", autoLoadImages)
         $("#showImageDirect").attr("checked", showImageDirect)
         $("#showLoadingStatus").attr("disabled", showImageDirect)
         window.imgListURL = getCookie("imgListURL")
@@ -118,18 +125,25 @@
         $.get(imgListURL, function (rdata) {
             window.imgList = rdata
             loadMore()
+            setInterval(function () {
+                if (loadingCount == 0) {
+                    autoLoadImage()
+                }
+            }, 6000);
         });
     }
 
     function setDefaultSettings() {
         window.showLoadingStatus = true
         window.showImageDirect = false
+        window.autoLoadImages = true
         window.imgListURL = "https://static.llilii.cn/json/img_list.json"
         window.imgBaseURL = "https://img.llilii.cn/kagamine/"
         $("#imgListURL").val(imgListURL)
         $("#imgBaseURL").val(imgBaseURL)
         setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
         setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
+        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
         setCookie("imgListURL", imgListURL, 30)
         setCookie("imgBaseURL", imgBaseURL, 30)
     }
@@ -154,21 +168,26 @@
             imgBoxCreate(i % 2)
         }
         if (showImageDirect) {
-            autoAddImage()
+            autoLoadImage()
         } else {
             setTimeout(function () {
-                autoAddImage()
-            }, 3000);
+                autoLoadImage()
+            }, 6000);
         }
     }
 
-    function autoAddImage() {
+    function autoLoadImage() {
         if ($("#imageBoxCol-0").height() - $("#imageBoxCol-1").height() > 50) {
             imgBoxCreate(1)
         } else {
             imgBoxCreate(0)
         }
     }
+
+    $("#autoLoadImages").click(function () {
+        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
+        autoLoadImages = $("#autoLoadImages").prop("checked")
+    })
 
     $("#showLoadingStatus").click(function () {
         setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
