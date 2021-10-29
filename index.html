@@ -13,6 +13,9 @@
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div style="display: none;" id="isLoading" class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
     <div id="page-index" class="mdui-container" style="max-width: 800px;">
         <h1 class="doc-title mdui-text-color-theme">Kagamine</h1>
 
@@ -88,6 +91,7 @@
     </div>
 </body>
 <script>
+    window.loadingCount = 0
     if (getCookie("showLoadingStatus") == "") {
         setDefaultSettings()
     } else {
@@ -145,6 +149,7 @@
     }
 
     function loadMore() {
+        loadingCount += loadImageNumber
         for (i = 0; i < loadImageNumber - 1; i++) {
             imgBoxCreate(i % 2)
         }
@@ -220,6 +225,7 @@
     }
 
     function loadImage(imgURL, imgBoxId, callback) {
+        loadingStatus()
         var xhr = new XMLHttpRequest();
         xhr.open('GET', imgURL);
         xhr.onprogress = function (event) {
@@ -230,6 +236,8 @@
         xhr.onreadystatechange = function () {
             switch (xhr.readyState) {
                 case 4:
+                    loadingCount -= 1
+                    loadingStatus()
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
                         console.log(imgURL)
                         callback(imgBoxId, imgURL)
@@ -242,6 +250,14 @@
             }
         };
         xhr.send();
+    }
+
+    function loadingStatus() {
+        if (loadingCount > 0) {
+            $("#isLoading").show(200)
+        } else {
+            $("#isLoading").hide(200)
+        }
     }
 
     function imgBoxCreate(colId) {
