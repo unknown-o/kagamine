@@ -70,19 +70,20 @@
 
     window.imgListURL = "https://static.llilii.cn/json/img_list.json"
     window.imgBaseURL = "https://img.llilii.cn/kagamine/"
-    if(getCookie("showLoadingStatus")==""){
+    if (getCookie("showLoadingStatus") == "") {
         window.showLoadingStatus = true
     } else {
-        window.showLoadingStatus = (getCookie("showLoadingStatus")=="true")
+        window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
         $("#showLoadingStatus").attr("checked", showLoadingStatus);
     }
-    if(getCookie("showImageDirect")==""){
+    if (getCookie("showImageDirect") == "") {
         window.showImageDirect = true
     } else {
-        window.showImageDirect = (getCookie("showImageDirect")=="true")
+        window.showImageDirect = (getCookie("showImageDirect") == "true")
         $("#showImageDirect").attr("checked", showImageDirect);
         $("#showLoadingStatus").attr("disabled", showImageDirect)
     }
+    window.loadImageNumber = 10
     //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
     //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
 
@@ -92,8 +93,23 @@
     });
 
     function loadMore() {
-        for (i = 0; i < 10; i++) {
+        for (i = 0; i < loadImageNumber - 1; i++) {
             imgBoxCreate(i % 2)
+        }
+        if (showImageDirect) {
+            autoAddImage()
+        } else {
+            setTimeout(function () {
+                autoAddImage()
+            }, 3000);
+        }
+    }
+
+    function autoAddImage() {
+        if ($("#imageBoxCol-0").height() - $("#imageBoxCol-1").height() > 50) {
+            imgBoxCreate(1)
+        } else {
+            imgBoxCreate(0)
         }
     }
 
