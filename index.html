@@ -161,7 +161,7 @@
     }
 
     function loadMore() {
-        loadingCount += loadImageNumber
+        loadingCount += loadImageNumber - 1
         for (i = 0; i < loadImageNumber - 1; i++) {
             imgBoxCreate(i % 2)
         }
