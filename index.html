@@ -52,7 +52,6 @@
                                         <label class="mdui-textfield-label">图像基础地址</label>
                                         <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
                                     </div>
-                                    <div class="mdui-card-primary-subtitle">这些设置刷新后还原！</div>
                                     <div class="mdui-panel-item-actions">
                                         <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
                                         <button onclick="saveAdvancedSettings()"
@@ -77,7 +76,6 @@
                 </div>
                 <div id='imgBoxId-loadingBox'>
                     <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
-
                         <h2>LOADING</h2>
                         <br>
                         <div class="mdui-progress">
@@ -92,24 +90,30 @@
 </body>
 <script>
 
-    window.imgListURL = "https://static.llilii.cn/json/img_list.json"
-    window.imgBaseURL = "https://img.llilii.cn/kagamine/"
-    $("#imgListURL").val(imgListURL)
-    $("#imgBaseURL").val(imgBaseURL)
+
+
     if (getCookie("showLoadingStatus") == "") {
         window.showLoadingStatus = true
         window.showImageDirect = true
+        window.imgListURL = "https://static.llilii.cn/json/img_list.json"
+        window.imgBaseURL = "https://img.llilii.cn/kagamine/"
+        $("#imgListURL").val(imgListURL)
+        $("#imgBaseURL").val(imgBaseURL)
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
-        $("#showLoadingStatus").attr("checked", showLoadingStatus);
+        $("#showLoadingStatus").attr("checked", showLoadingStatus)
         window.showImageDirect = (getCookie("showImageDirect") == "true")
-        $("#showImageDirect").attr("checked", showImageDirect);
+        $("#showImageDirect").attr("checked", showImageDirect)
         $("#showLoadingStatus").attr("disabled", showImageDirect)
+        window.imgListURL = getCookie("imgListURL")
+        window.imgBaseURL = getCookie("imgBaseURL")
+        $("#imgListURL").val(getCookie("imgListURL"))
+        $("#imgBaseURL").val(getCookie("imgBaseURL"))
     }
     window.loadImageNumber = 10
     //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
     //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
-
+    if(imgListURL==""||imgListURL==null||imgListURL==undefined)
     $.get(imgListURL, function (rdata) {
         window.imgList = rdata
         loadMore()
@@ -118,6 +122,8 @@
     function saveAdvancedSettings() {
         window.imgListURL = $("#imgListURL").val()
         window.imgBaseURL = $("#imgBaseURL").val()
+        setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgBaseURL", imgBaseURL, 30)
         $.get(imgListURL, function (rdata) {
             window.imgList = rdata
         });
