@@ -1,139 +1,313 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <title>Kagamine</title>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css" />
+    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
+    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="/js/console-image.js"></script>
 </head>
 
-<body class="mdui-appbar-with-toolbar  mdui-theme-primary-pink mdui-theme-accent-pink">
-
-    <body>
-        <div id='imgBox' class="mdui-container" style="max-width: 400px; ">
-            <br><br><br><br>
-            <div class="mdui-card">
-                <div class="mdui-card-media">
-                    <img id='imgSrc' src="" />
-                    <div class="mdui-card-media-covered">
-                        <div class="mdui-card-primary">
-                            <div id='imgName' class="mdui-card-primary-title">加载中...</div>
-                            <div id='imgUrl' class="mdui-card-primary-subtitle">正在加载链接中</div>
-                        </div>
-                    </div>
-                </div>
-                <div id='Remind'>
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div style="display: none;" id="isLoading" class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div id="page-index" class="mdui-container" style="max-width: 800px;">
+        <h1 class="doc-title mdui-text-color-theme">Kagamine</h1>
+        <div class="doc-chapter">
+            <div class="mdui-typo">
+                <p>在这里，你可以以瀑布流的形式查看图片</p>
+            </div>
+        </div><br>
+        <div class="mdui-row-xs-2 mdui-row-gapless">
+            <div class="mdui-col" id="imageBoxCol-0"></div>
+            <div class="mdui-col" id="imageBoxCol-1">
+                <div id="imgBoxId-main" class="mdui-card mdui-hoverable">
                     <div class="mdui-card-content">
-                        <center><img src="https://static.llilii.cn/images/other/loading.png" /></center><br>
-                        <div class="mdui-progress">
-                            <div id='loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
+                        直接显示图片：
+                        <label class="mdui-switch">
+                            <input id="showImageDirect" type="checkbox" />
+                            <i class="mdui-switch-icon"></i>
+                        </label>
+                        <br> 显示加载进度条：
+                        <label class="mdui-switch">
+                            <input id="showLoadingStatus" type="checkbox" checked />
+                            <i class="mdui-switch-icon"></i>
+                        </label>
+                        <br> 自动加载图片补位：
+                        <label class="mdui-switch">
+                            <input id="autoLoadImages" type="checkbox" checked />
+                            <i class="mdui-switch-icon"></i>
+                        </label>
+                        <div class="mdui-panel mdui-panel-popout" mdui-panel>
+                            <div class="mdui-panel-item">
+                                <div class="mdui-panel-item-header">
+                                    <div class="mdui-panel-item-title">高级设置</div>
+                                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                                </div>
+                                <div class="mdui-panel-item-body">
+                                    <div class="mdui-textfield mdui-textfield-floating-label">
+                                        <label class="mdui-textfield-label">图像列表</label>
+                                        <input id="imgListURL" class="mdui-textfield-input" type="text" />
+                                    </div>
+                                    <div class="mdui-textfield mdui-textfield-floating-label">
+                                        <label class="mdui-textfield-label">图像基础地址</label>
+                                        <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
+                                    </div>
+                                    <div class="mdui-panel-item-actions">
+                                        <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
+                                        <button onclick="saveAdvancedSettings()"
+                                            class="mdui-btn mdui-ripple">保存</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="mdui-card-actions">
-                    <a id='sourceImg' target="_blank" class="mdui-btn mdui-color-theme-accent mdui-ripple" href="">查看原图</a>
-                    <button onclick='image_get()' class="mdui-btn mdui-color-theme-accent mdui-ripple">刷新图片</button>
                 </div>
             </div>
-            <br><br><br><br>
+        </div><br>
+        <center>
+            <button onclick="loadMore()"
+                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
+        </center>
+    </div>
+    <div style="display: none;">
+        <div id="imageBoxTemplate">
+            <div id="imgBoxId-main" style="display: none;" class="mdui-card mdui-hoverable">
+                <div class="mdui-card-media">
+                    <img onclick="window.open(this.src)" id='imgBoxId-imageSrc' src="" />
+                </div>
+                <div id='imgBoxId-loadingBox'>
+                    <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
+                        <h2>LOADING</h2>
+                        <br>
+                        <div class="mdui-progress">
+                            <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <script src="//cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"></script>
-    </body>
-
-</html>
-
+    </div>
+</body>
 <script>
-    image_get();
-
-    var audio = document.createElement("audio");
-    audio.src = "https://static.llilii.cn/music/jG06bO2FCmPmcL1J.mp3";
-    audio.loop = "loop"
-    setTimeout(function() {
-        audio.play();
-    }, 50);
-
-    function image_get() {
-        document.getElementById("imgBox").style = "max-width: 400px;";
-        document.getElementById("imgSrc").src = '';
-        document.getElementById("Remind").innerHTML = '<div class="mdui-card-content"><center><img src="https://static.llilii.cn/images/other/loading.png"/></center><br><div class="mdui-progress"><div id=\'loadingStatus\' class="mdui-progress-determinate" style="width: 0%;"></div></div></div>';
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            switch (xhr.readyState) {
-                case 4:
-                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                        img_name = JSON.parse(xhr.responseText)['file_name'][RandomNumBoth(0, JSON.parse(xhr.responseText)['file_num'])];
-                        document.getElementById("imgName").innerHTML = img_name.split("/")[1];
-                        img_url = "https://img.llilii.cn/kagamine/" + img_name;
-                        document.getElementById("imgUrl").innerHTML = img_url;
-                        document.getElementById("sourceImg").href = img_url;
-                        load_img(img_url);
-                    }
-                    break;
-            }
-        }
-        xhr.open('get', 'https://static.llilii.cn/json/img_list.json');
-        xhr.send(null);
+    window.loadingCount = 0
+    if (getCookie("showLoadingStatus") == "") {
+        setDefaultSettings()
+    } else {
+        window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
+        window.showImageDirect = (getCookie("showImageDirect") == "true")
+        window.autoLoadImages = (getCookie("autoLoadImages") == "true")
+        $("#showLoadingStatus").attr("checked", showLoadingStatus)
+        $("#autoLoadImages").attr("checked", autoLoadImages)
+        $("#showImageDirect").attr("checked", showImageDirect)
+        $("#showLoadingStatus").attr("disabled", showImageDirect)
+        window.imgListURL = getCookie("imgListURL")
+        window.imgBaseURL = getCookie("imgBaseURL")
+        $("#imgListURL").val(getCookie("imgListURL"))
+        $("#imgBaseURL").val(getCookie("imgBaseURL"))
+    }
+    window.loadImageNumber = 10
+    if (imgListURL == "" || imgListURL == null || imgListURL == undefined) {
+        setDefaultSettings()
+        mdui.snackbar({
+            message: '加载图片列表失败！请刷新重试！',
+            position: 'right-top'
+        });
+    } else {
+        $.get(imgListURL, function (rdata) {
+            window.imgList = rdata
+            loadMore()
+            setInterval(function () {
+                if (loadingCount == 0) {
+                    autoLoadImage()
+                }
+            }, 6000);
+        });
     }
 
-    function RandomNumBoth(Min, Max) {
-        var Range = Max - Min;
-        var Rand = Math.random();
-        var num = Min + Math.round(Rand * Range);
+    function setDefaultSettings() {
+        window.showLoadingStatus = true
+        window.showImageDirect = false
+        window.autoLoadImages = true
+        window.imgListURL = "https://static.llilii.cn/json/img_list.json"
+        window.imgBaseURL = "https://img.llilii.cn/kagamine/"
+        $("#imgListURL").val(imgListURL)
+        $("#imgBaseURL").val(imgBaseURL)
+        setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
+        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
+        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
+        setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgBaseURL", imgBaseURL, 30)
+    }
+
+    function saveAdvancedSettings() {
+        window.imgListURL = $("#imgListURL").val()
+        window.imgBaseURL = $("#imgBaseURL").val()
+        setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgBaseURL", imgBaseURL, 30)
+        $.get(imgListURL, function (rdata) {
+            window.imgList = rdata
+        });
+        mdui.snackbar({
+            message: '保存成功！',
+            position: 'right-top'
+        });
+    }
+
+    function loadMore() {
+        loadingCount += loadImageNumber - 1
+        for (i = 0; i < loadImageNumber - 1; i++) {
+            imgBoxCreate(i % 2)
+        }
+        if (showImageDirect) {
+            autoLoadImage()
+        } else {
+            setTimeout(function () {
+                autoLoadImage()
+            }, 6000);
+        }
+    }
+
+    function autoLoadImage() {
+        loadingCount += 1
+        if ($("#imageBoxCol-0").height() - $("#imageBoxCol-1").height() > 0) {
+            imgBoxCreate(1)
+        } else {
+            imgBoxCreate(0)
+        }
+    }
+
+    $("#autoLoadImages").click(function () {
+        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
+        autoLoadImages = $("#autoLoadImages").prop("checked")
+    })
+
+    $("#showLoadingStatus").click(function () {
+        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
+        showLoadingStatus = $("#showLoadingStatus").prop("checked")
+    })
+
+    $("#showImageDirect").click(function () {
+        setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
+        showImageDirect = $("#showImageDirect").prop("checked")
+        $("#showLoadingStatus").attr("disabled", showImageDirect)
+    })
+
+
+    function randomNumBoth(min, max) {
+        var range = max - min;
+        var rand = Math.random();
+        var num = min + Math.round(rand * range);
         return num;
     }
 
-    function load_img(url) {
+    function isMobile() {
+        var userAgentInfo = navigator.userAgent;
+        var mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+        var mobileFlag = false;
+        for (var v = 0; v < mobileAgents.length; v++) {
+            if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+                mobileFlag = true;
+                break;
+            }
+        }
+        var screenWidth = window.screen.width;
+        var screenHeight = window.screen.height;
+        if (screenWidth < 500 && screenHeight < 800) {
+            mobileFlag = true;
+        }
+        return mobileFlag;
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+
+    function loadImage(imgURL, imgBoxId, callback) {
+        loadingStatus()
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.onprogress = function(event) {
+        xhr.open('GET', imgURL);
+        xhr.onprogress = function (event) {
             if (event.lengthComputable) {
-                document.getElementById("loadingStatus").style = 'width: ' + parseInt((event.loaded / event.total) * 100).toString() + '%;';
-                //console.log((event.loaded / event.total) * 100); // 进度
+                $("#" + imgBoxId.toString() + "-loadingStatus").css("width", parseInt((event.loaded / event.total) * 100).toString() + "%")
             }
         };
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             switch (xhr.readyState) {
                 case 4:
+                    if (loadingCount > 0) {
+                        loadingCount -= 1
+                    }
+                    loadingStatus()
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                        get_image_size(url);
+                        callback(imgBoxId, imgURL)
                     } else {
-                        mdui.alert(name + "抱歉，图片加载失败！");
+                        mdui.snackbar({
+                            message: '抱歉，图片加载失败！',
+                            position: 'left-top'
+                        });
                     }
             }
         };
         xhr.send();
     }
 
-    function get_image_size(url) {
-        var img = new Image();
-        img.src = url;
-        img.onerror = function() {
-            mdui.alert("抱歉，图片加载失败！");
-            return false;
-        };
-
-        if (img.complete) {
-            display_image(url, img);
-            //console.log(img.width+" "+img.height);
+    function loadingStatus() {
+        if (loadingCount > 0) {
+            $("#isLoading").show(200)
         } else {
-            img.onload = function() {
-                display_image(url, img);
-                //console.log(img.width+" "+img.height);
-                img.onload = null;
-            }
+            $("#isLoading").hide(200)
         }
     }
 
-    function display_image(url, img) {
-        document.getElementById("imgBox").style = "max-width: " + img.width + 'px;';
-        document.getElementById("imgSrc").src = url;
-        document.getElementById("Remind").innerHTML = '';
-        mdui.snackbar({
-            message: '加载成功！',
-            timeout: 1000
-        });
+    function imgBoxCreate(colId) {
+        imgBoxId = randomNumBoth(100000, 99999999)
+        imageBoxTemplate = $("#imageBoxTemplate").html()
+        imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId)
+        $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
+        imgURL = imgBaseURL + imgList['file_name'][randomNumBoth(0, imgList['file_num'])]
+        $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
+        $("#" + imgBoxId.toString() + "-imageSrc").hide()
+        if (isMobile()) {
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200).toString() + "px")
+        } else {
+            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(400, 600).toString() + "px")
+        }
+        if (showImageDirect) {
+            $("#" + imgBoxId.toString() + "-imageSrc").show()
+            $("#" + imgBoxId.toString() + "-loadingBox").hide()
+            $("#" + imgBoxId.toString() + "-main").show(200)
+        } else {
+            if (showLoadingStatus) {
+                $("#" + imgBoxId.toString() + "-main").show(200)
+            }
+            loadImage(imgURL, imgBoxId, function (imgBoxId, imgURL) {
+                if (!showLoadingStatus) {
+                    $("#" + imgBoxId.toString() + "-main").show(200)
+                }
+                $("#" + imgBoxId.toString() + "-imageSrc").show()
+                $("#" + imgBoxId.toString() + "-loadingBox").hide()
+            })
+        }
     }
 </script>
