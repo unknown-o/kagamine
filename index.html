@@ -18,7 +18,6 @@
     </div>
     <div id="page-index" class="mdui-container" style="max-width: 800px;">
         <h1 class="doc-title mdui-text-color-theme">Kagamine</h1>
-
         <div class="doc-chapter">
             <div class="mdui-typo">
                 <p>在这里，你可以以瀑布流的形式查看图片</p>
@@ -69,11 +68,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div><br>
-        <center><button onclick="loadMore()"
-                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button></center>
+        <center>
+            <button onclick="loadMore()"
+                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
+        </center>
     </div>
     <div style="display: none;">
         <div id="imageBoxTemplate">
@@ -113,8 +113,6 @@
         $("#imgBaseURL").val(getCookie("imgBaseURL"))
     }
     window.loadImageNumber = 10
-    //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
-    //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
     if (imgListURL == "" || imgListURL == null || imgListURL == undefined) {
         setDefaultSettings()
         mdui.snackbar({
