@@ -81,8 +81,8 @@
     } else {
         window.showImageDirect = (getCookie("showImageDirect")=="true")
         $("#showImageDirect").attr("checked", showImageDirect);
+        $("#showLoadingStatus").attr("disabled", showImageDirect)
     }
-    window.showImageDirect = false
     //window.imgListURL = "https://static.llilii.cn/json/keqingImagesList.json"
     //window.imgBaseURL = "https://img.llilii.cn/genshin-impact/keqing/"
 
@@ -106,7 +106,6 @@
         setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
         showImageDirect = $("#showImageDirect").prop("checked")
         $("#showLoadingStatus").attr("disabled", showImageDirect)
-
     })
 
 
