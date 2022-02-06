@@ -156,7 +156,7 @@
         $("#isLoading").show(100)
         $.ajax({
             type: 'post',
-            url: '/' + functionName + '.php',
+            url: 'https://api.llilii.cn/kagamine/' + functionName + '.php',
             data: args,
             dataType: 'json',
             success: function (rdata) {
