@@ -146,7 +146,6 @@
                 }, 6000);
             })
         }, true, false, false)
-
     }
 
     function request_api(functionName, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
@@ -354,8 +353,12 @@
         imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId).replaceAll("image-name", image_name)
         $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
-        if (likes[image_name] != undefined) {
-            $("#" + imgBoxId.toString() + "-likes").text(likes[image_name]);
+        try {
+            if (likes[image_name] != undefined) {
+                $("#" + imgBoxId.toString() + "-likes").text(likes[image_name]);
+            }
+        } catch (error) {
+            console.log("Failed to get likes!")
         }
         $("#" + imgBoxId.toString() + "-imageSrc").hide()
         if (isMobile()) {
