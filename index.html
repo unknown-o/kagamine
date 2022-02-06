@@ -136,16 +136,17 @@
         key = $.md5('KAGAMINE LEN LOVE RIN !' + timestamp)
         request_api("get_likes", { key: key, timestamp: timestamp }, function (rdata) {
             window.likes = rdata.data
+            $.get(imgListURL, function (rdata) {
+                window.imgList = rdata
+                loadMore()
+                setInterval(function () {
+                    if (loadingCount == 0) {
+                        autoLoadImage()
+                    }
+                }, 6000);
+            })
         }, true, false, false)
-        $.get(imgListURL, function (rdata) {
-            window.imgList = rdata
-            loadMore()
-            setInterval(function () {
-                if (loadingCount == 0) {
-                    autoLoadImage()
-                }
-            }, 6000);
-        });
+
     }
 
     function request_api(functionName, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
