@@ -347,7 +347,7 @@
     function imgBoxCreate(colId) {
         imgBoxId = randomNumBoth(100000, 99999999)
         imageBoxTemplate = $("#imageBoxTemplate").html()
-        image_id = randomNumBoth(0, imgList['file_num'])
+        image_id = randomNumBoth(0, parseInt(imgList['file_num']) - 1)
         image_name = imgList['file_name'][image_id]
         imgURL = imgBaseURL + image_name
         imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId).replaceAll("image-name", image_name)
