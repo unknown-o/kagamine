@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
     <script src="/js/console-image.js"></script>
 </head>
 
@@ -81,6 +82,16 @@
             <div id="imgBoxId-main" style="display: none;" class="mdui-card mdui-hoverable">
                 <div class="mdui-card-media">
                     <img onclick="window.open(this.src)" id='imgBoxId-imageSrc' src="" />
+                    <div class="mdui-card-menu">
+                        <button onclick="like('imgBoxId','image-name')"
+                            class="mdui-btn mdui-btn-icon mdui-color-theme-accent mdui-ripple">
+                            <i class="mdui-icon material-icons">favorite</i>
+                        </button>
+                        &nbsp;
+                        <div class="mdui-float-right mdui-card-primary-subtitle">
+                            <div id="imgBoxId-likes">0</div>
+                        </div>
+                    </div>
                 </div>
                 <div id='imgBoxId-loadingBox'>
                     <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
@@ -121,6 +132,11 @@
             position: 'right-top'
         });
     } else {
+        timestamp = Date.parse(new Date()) / 1000
+        key = $.md5('KAGAMINE LEN LOVE RIN !' + timestamp)
+        request_api("get_likes", { key: key, timestamp: timestamp }, function (rdata) {
+            window.likes = rdata.data
+        }, true, false, false)
         $.get(imgListURL, function (rdata) {
             window.imgList = rdata
             loadMore()
@@ -130,6 +146,46 @@
                 }
             }, 6000);
         });
+    }
+
+    function request_api(functionName, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
+        $(disableBtnId).attr("disabled", true);
+        setTimeout(function () {
+            $(disableBtnId).attr("disabled", false);
+        }, 200000)
+        $("#isLoading").show(100)
+        $.ajax({
+            type: 'post',
+            url: '/' + functionName + '.php',
+            data: args,
+            dataType: 'json',
+            success: function (rdata) {
+                if (showResults) {
+                    mdui.snackbar({
+                        message: rdata.msg,
+                        position: 'right-top'
+                    })
+                }
+                if (refreshPageWhenSuccess & rdata.code == 1) {
+                    $.pjax.reload({
+                        container: "#pjax-container"
+                    })
+                }
+                $("#isLoading").hide(100)
+                $(disableBtnId).attr("disabled", false)
+                if (callback) {
+                    callback(rdata)
+                }
+            },
+            error: function (data) {
+                $("#isLoading").hide(100)
+                $(disableBtnId).attr("disabled", false)
+                mdui.snackbar({
+                    message: "请求接口[" + functionName + "]时，出现了一个致命错误！",
+                    position: 'right-top'
+                })
+            },
+        })
     }
 
     function setDefaultSettings() {
@@ -280,13 +336,26 @@
         }
     }
 
+    function like(imagebox_id, image_name) {
+        timestamp = Date.parse(new Date()) / 1000
+        key = $.md5('KAGAMINE LEN LOVE RIN !' + timestamp)
+        request_api("like_image", { image_name: image_name, timestamp: timestamp, key: key }, function (rdata) {
+            $("#" + imagebox_id.toString() + "-likes").text(rdata.likes);
+        }, true, false, false)
+    }
+
     function imgBoxCreate(colId) {
         imgBoxId = randomNumBoth(100000, 99999999)
         imageBoxTemplate = $("#imageBoxTemplate").html()
-        imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId)
+        image_id = randomNumBoth(0, imgList['file_num'])
+        image_name = imgList['file_name'][image_id]
+        imgURL = imgBaseURL + image_name
+        imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId).replaceAll("image-name", image_name)
         $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
-        imgURL = imgBaseURL + imgList['file_name'][randomNumBoth(0, imgList['file_num'])]
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
+        if (likes[image_name] != undefined) {
+            $("#" + imgBoxId.toString() + "-likes").text(likes[image_name]);
+        }
         $("#" + imgBoxId.toString() + "-imageSrc").hide()
         if (isMobile()) {
             $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200).toString() + "px")
