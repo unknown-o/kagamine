@@ -14,68 +14,81 @@
     <script src="/js/console-image.js"></script>
 </head>
 
-<body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-drawer-body-left" id="body">
     <div style="display: none;" id="isLoading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
-    <div id="page-index" class="mdui-container" style="max-width: 800px;">
-        <h1 class="doc-title mdui-text-color-theme">Kagaminefans</h1>
-        <div class="doc-chapter">
-            <div class="mdui-typo">
-                <p>如果天使有声音，那么一定是镜音的天籁！</p>
-            </div>
-        </div><br>
-        <div class="mdui-row-xs-2 mdui-row-gapless">
-            <div class="mdui-col" id="imageBoxCol-0"></div>
-            <div class="mdui-col" id="imageBoxCol-1">
-                <div id="imgBoxId-main" class="mdui-card mdui-hoverable">
-                    <div class="mdui-card-content">
-                        直接显示图片：
-                        <label class="mdui-switch">
-                            <input id="showImageDirect" type="checkbox" />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <br> 显示加载进度条：
-                        <label class="mdui-switch">
-                            <input id="showLoadingStatus" type="checkbox" checked />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <br> 自动加载图片补位：
-                        <label class="mdui-switch">
-                            <input id="autoLoadImages" type="checkbox" checked />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <div class="mdui-panel mdui-panel-popout" mdui-panel>
-                            <div class="mdui-panel-item">
-                                <div class="mdui-panel-item-header">
-                                    <div class="mdui-panel-item-title">高级设置</div>
-                                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                                </div>
-                                <div class="mdui-panel-item-body">
-                                    <div class="mdui-textfield mdui-textfield-floating-label">
-                                        <label class="mdui-textfield-label">图像列表</label>
-                                        <input id="imgListURL" class="mdui-textfield-input" type="text" />
-                                    </div>
-                                    <div class="mdui-textfield mdui-textfield-floating-label">
-                                        <label class="mdui-textfield-label">图像基础地址</label>
-                                        <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
-                                    </div>
-                                    <div class="mdui-panel-item-actions">
-                                        <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
-                                        <button onclick="saveAdvancedSettings()"
-                                            class="mdui-btn mdui-ripple">保存</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="mdui-appbar mdui-appbar-fixed" style="z-index:10;">
+        <div class="mdui-toolbar mdui-color-amber">
+            <a href="javascript:;" class="mdui-btn mdui-btn-icon" id="menuToggleBtn" style="color:white;"><i class="mdui-icon material-icons">menu</i></a>
+            <a href="javascript:;" class="mdui-typo-headline" style="color:white;">Kagaminefans</a>
+            <a href="javascript:;" class="mdui-typo-title" style="color:white;"><small>如果天使有声音，那么一定是镜音的天籁！</small></a>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="https://github.com/unknown-o/kagamine" hreflang="en" target="_blank" rel="bookmark" class="mdui-btn mdui-btn-icon" style="color:white;"><i class="mdui-icon material-icons">&#xe86f;</i></a>
+        </div>
+    </div>
+    <div class="mdui-drawer" id="settingBox" style="z-index:9;">
+       <br>
+       <br>
+       <br>
+       <br>
+       <div class="mdui-card-content">
+        直接显示图片：
+        <label class="mdui-switch">
+            <input id="showImageDirect" type="checkbox" />
+            <i class="mdui-switch-icon"></i>
+        </label>
+        <br> 显示加载进度条：
+        <label class="mdui-switch">
+            <input id="showLoadingStatus" type="checkbox" checked />
+            <i class="mdui-switch-icon"></i>
+        </label>
+        <br> 自动加载图片补位：
+        <label class="mdui-switch">
+            <input id="autoLoadImages" type="checkbox" checked />
+            <i class="mdui-switch-icon"></i>
+        </label>
+        <div class="mdui-panel mdui-panel-popout" mdui-panel>
+            <div class="mdui-panel-item">
+                <div class="mdui-panel-item-header">
+                    <div class="mdui-panel-item-title">高级设置</div>
+                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                </div>
+                <div class="mdui-panel-item-body">
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <label class="mdui-textfield-label">图像列表</label>
+                        <input id="imgListURL" class="mdui-textfield-input" type="text" />
+                    </div>
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <label class="mdui-textfield-label">图像基础地址</label>
+                        <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
+                    </div>
+                    <div class="mdui-panel-item-actions">
+                        <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
+                        <button onclick="saveAdvancedSettings()"
+                        class="mdui-btn mdui-ripple">保存</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div id="page-index" class="mdui-container" style="max-width: 800px;">
+    <div class="mdui-row-xs-2 mdui-row-gapless">
+        <div class="mdui-col" id="imageBoxCol-0"></div>
+        <div class="mdui-col" id="imageBoxCol-1">
+            <div id="imgBoxId-main" class="mdui-card mdui-hoverable"></div>
         </div><br>
         <center>
             <button onclick="loadMore()"
-                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
+            class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
         </center>
+        <a href="#body" rel="nofollow index"><button class="mdui-fab mdui-fab-fixed mdui-color-red mdui-color-pink-accent"><i class="mdui-icon material-icons">&#xe5d8;</i></button></a>
     </div>
     <div style="display: none;">
         <div id="imageBoxTemplate">
@@ -84,29 +97,41 @@
                     <img onclick="window.open(this.src)" id='imgBoxId-imageSrc' src="" />
                     <div class="mdui-card-menu">
                         <button onclick="like('imgBoxId','image-name')"
-                            class="mdui-btn mdui-btn-icon mdui-color-theme-accent mdui-ripple">
-                            <i class="mdui-icon material-icons">favorite</i>
-                        </button>
-                        &nbsp;
-                        <div class="mdui-float-right mdui-card-primary-subtitle">
-                            <div id="imgBoxId-likes">0</div>
-                        </div>
+                        class="mdui-btn mdui-btn-icon mdui-color-theme-accent mdui-ripple">
+                        <i class="mdui-icon material-icons">favorite</i>
+                    </button>
+                    &nbsp;
+                    <div class="mdui-float-right mdui-card-primary-subtitle">
+                        <div id="imgBoxId-likes">0</div>
                     </div>
                 </div>
-                <div id='imgBoxId-loadingBox'>
-                    <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
-                        <h2>LOADING</h2>
-                        <br>
-                        <div class="mdui-progress">
-                            <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
-                        </div>
+            </div>
+            <div id='imgBoxId-loadingBox'>
+                <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
+                    <h2>LOADING</h2>
+                    <br>
+                    <div class="mdui-progress">
+                        <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+</div>
 </body>
+<style type="text/css">
+.mdui-overlay{
+    display: none;
+}
+</style>
+<script>
+    //For #settingBox
+    var inst = new mdui.Drawer('#settingBox');
+    mdui.$('#menuToggleBtn').on('click', function () {
+        inst.toggle();
+    });
+</script>
 <script>
     window.loadingCount = 0
     if (getCookie("showLoadingStatus") == "") {
@@ -311,18 +336,18 @@
         xhr.onreadystatechange = function () {
             switch (xhr.readyState) {
                 case 4:
-                    if (loadingCount > 0) {
-                        loadingCount -= 1
-                    }
-                    loadingStatus()
-                    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                        callback(imgBoxId, imgURL)
-                    } else {
-                        mdui.snackbar({
-                            message: '抱歉，图片加载失败！',
-                            position: 'left-top'
-                        });
-                    }
+                if (loadingCount > 0) {
+                    loadingCount -= 1
+                }
+                loadingStatus()
+                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                    callback(imgBoxId, imgURL)
+                } else {
+                    mdui.snackbar({
+                        message: '抱歉，图片加载失败！',
+                        position: 'left-top'
+                    });
+                }
             }
         };
         xhr.send();
