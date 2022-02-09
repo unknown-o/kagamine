@@ -106,18 +106,20 @@
         </div>
 
     </div>
-    <div id="back-to-top" style="display: none;">
-        <button onclick="back_to_top()" class="mdui-fab mdui-fab-fixed mdui-color-red mdui-color-pink-accent"><i
-                class="mdui-icon material-icons">keyboard_arrow_up</i></button>
+    <div class="mdui-fab-fixed ">
+        <button id="back-to-top" onclick="back_to_top()"
+            class="mdui-fab-hide mdui-fab mdui-color-red mdui-color-pink-accent">
+            <i class="mdui-icon material-icons">keyboard_arrow_up</i>
+        </button>
     </div>
 </body>
 <script>
     $(window).on('scroll', function () {
         var scrolled = $(window).scrollTop();
         if (scrolled > 100) {
-            $("#back-to-top").show(200)
+            $("#back-to-top").removeClass("mdui-fab-hide")
         } else {
-            $("#back-to-top").hide(200)
+            $("#back-to-top").addClass("mdui-fab-hide")
         }
     });
 
