@@ -262,16 +262,28 @@
     }
 
     $("#autoLoadImages").click(function () {
+        mdui.snackbar({
+            message: "设置保存成功！",
+            position: 'right-top'
+        })
         setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
         autoLoadImages = $("#autoLoadImages").prop("checked")
     })
 
     $("#showLoadingStatus").click(function () {
+        mdui.snackbar({
+            message: "设置保存成功！",
+            position: 'right-top'
+        })
         setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
         showLoadingStatus = $("#showLoadingStatus").prop("checked")
     })
 
     $("#showImageDirect").click(function () {
+        mdui.snackbar({
+            message: "设置保存成功！",
+            position: 'right-top'
+        })
         setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
         showImageDirect = $("#showImageDirect").prop("checked")
         $("#showLoadingStatus").attr("disabled", showImageDirect)
