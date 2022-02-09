@@ -27,50 +27,7 @@
         </div><br>
         <div class="mdui-row-xs-2 mdui-row-gapless">
             <div class="mdui-col" id="imageBoxCol-0"></div>
-            <div class="mdui-col" id="imageBoxCol-1">
-                <div id="imgBoxId-main" class="mdui-card mdui-hoverable">
-                    <div class="mdui-card-content">
-                        直接显示图片：
-                        <label class="mdui-switch">
-                            <input id="showImageDirect" type="checkbox" />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <br> 显示加载进度条：
-                        <label class="mdui-switch">
-                            <input id="showLoadingStatus" type="checkbox" checked />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <br> 自动加载图片补位：
-                        <label class="mdui-switch">
-                            <input id="autoLoadImages" type="checkbox" checked />
-                            <i class="mdui-switch-icon"></i>
-                        </label>
-                        <div class="mdui-panel mdui-panel-popout" mdui-panel>
-                            <div class="mdui-panel-item">
-                                <div class="mdui-panel-item-header">
-                                    <div class="mdui-panel-item-title">高级设置</div>
-                                    <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                                </div>
-                                <div class="mdui-panel-item-body">
-                                    <div class="mdui-textfield mdui-textfield-floating-label">
-                                        <label class="mdui-textfield-label">图像列表</label>
-                                        <input id="imgListURL" class="mdui-textfield-input" type="text" />
-                                    </div>
-                                    <div class="mdui-textfield mdui-textfield-floating-label">
-                                        <label class="mdui-textfield-label">图像基础地址</label>
-                                        <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
-                                    </div>
-                                    <div class="mdui-panel-item-actions">
-                                        <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
-                                        <button onclick="saveAdvancedSettings()"
-                                            class="mdui-btn mdui-ripple">保存</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="mdui-col" id="imageBoxCol-1"></div>
         </div><br>
         <center>
             <button onclick="loadMore()"
@@ -106,11 +63,60 @@
         </div>
 
     </div>
-    <div class="mdui-fab-fixed ">
+    <div class="mdui-fab-fixed">
         <button id="back-to-top" onclick="back_to_top()"
             class="mdui-fab-hide mdui-fab mdui-color-red mdui-color-pink-accent">
             <i class="mdui-icon material-icons">keyboard_arrow_up</i>
         </button>
+        <br><br>
+        <button mdui-dialog="{target: '#settings-main'}" class="mdui-fab mdui-color-red mdui-color-pink-accent">
+            <i class="mdui-icon material-icons">settings</i>
+        </button>
+    </div>
+    <div class="mdui-dialog" id="settings-main">
+        <div class="mdui-dialog-title">显示设置</div>
+        <div class="mdui-dialog-content">
+            直接显示图片：
+            <label class="mdui-switch">
+                <input id="showImageDirect" type="checkbox" />
+                <i class="mdui-switch-icon"></i>
+            </label>
+            <br> 显示加载进度条：
+            <label class="mdui-switch">
+                <input id="showLoadingStatus" type="checkbox" checked />
+                <i class="mdui-switch-icon"></i>
+            </label>
+            <br> 自动加载图片补位：
+            <label class="mdui-switch">
+                <input id="autoLoadImages" type="checkbox" checked />
+                <i class="mdui-switch-icon"></i>
+            </label>
+            <div class="mdui-panel mdui-panel-popout" mdui-panel>
+                <div class="mdui-panel-item">
+                    <div class="mdui-panel-item-header">
+                        <div class="mdui-panel-item-title">高级设置</div>
+                        <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <div class="mdui-panel-item-body">
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">图像列表</label>
+                            <input id="imgListURL" class="mdui-textfield-input" type="text" />
+                        </div>
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">图像基础地址</label>
+                            <input id="imgBaseURL" class="mdui-textfield-input" type="text" />
+                        </div>
+                        <div class="mdui-panel-item-actions">
+                            <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
+                            <button onclick="saveAdvancedSettings()" class="mdui-btn mdui-ripple">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>关闭</button>
+        </div>
     </div>
 </body>
 <script>
