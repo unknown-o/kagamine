@@ -106,8 +106,21 @@
         </div>
 
     </div>
+    <div id="back-to-top" style="display: none;">
+        <button onclick="back_to_top()" class="mdui-fab mdui-fab-fixed mdui-color-red mdui-color-pink-accent"><i
+                class="mdui-icon material-icons">keyboard_arrow_up</i></button>
+    </div>
 </body>
 <script>
+    $(window).on('scroll', function () {
+        var scrolled = $(window).scrollTop();
+        if (scrolled > 100) {
+            $("#back-to-top").show(200)
+        } else {
+            $("#back-to-top").hide(200)
+        }
+    });
+
     window.loadingCount = 0
     if (getCookie("showLoadingStatus") == "") {
         setDefaultSettings()
@@ -390,5 +403,9 @@
                 $("#" + imgBoxId.toString() + "-loadingBox").hide()
             })
         }
+    }
+
+    function back_to_top() {
+        $("html,body").animate({ scrollTop: 0 }, 250);
     }
 </script>
