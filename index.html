@@ -201,6 +201,7 @@
             error: function (data) {
                 $("#isLoading").hide(100)
                 $(disableBtnId).attr("disabled", false)
+                callback({})
                 mdui.snackbar({
                     message: "请求接口[" + functionName + "]时，出现了一个致命错误！",
                     position: 'right-top'
