@@ -123,7 +123,7 @@
     });
 
     window.loadingCount = 0
-    if (getCookie("showLoadingStatus") == "") {
+    if (getCookie("showLoadingStatus") == "" || getCookie("imgBaseURL") != "") {
         setDefaultSettings()
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
@@ -214,6 +214,7 @@
         setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
         setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
         setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgBaseURL", "", 1)
     }
 
     function saveAdvancedSettings() {
