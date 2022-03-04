@@ -388,7 +388,7 @@
         base_url_compression = imgList['base_url']['compression']['private'][randomNumBoth(0, parseInt(imgList['base_url']['compression']['private'].length) - 1)]
         image_name = imgList['filename'][image_id]
         imgURL = base_url_compression + "/" + image_name
-        imageBoxTemplate = imageBoxTemplate.replaceAll("imgBoxId", imgBoxId).replaceAll("image-name", image_name)
+        imageBoxTemplate = imageBoxTemplate.replace(/imgBoxId/g, imgBoxId).replace(/image-name/g, image_name)
         $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
         $("#" + imgBoxId.toString() + "-imageSrc").attr("origin-src", base_url_origin + "/" + image_name);
