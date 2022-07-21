@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>VideoPlayer - Kagaminefans</title>
+    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
+    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
+    <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
+    <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
+</head>
+
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-teal mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div style="display: none;" id="is-loading" class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div id="page-index" class="mdui-container" style="max-width: 800px;">
+        <h1 class="doc-title mdui-text-color-theme">VideoPlayer</h1>
+        <div class="doc-chapter">
+            <div class="mdui-typo">
+                <p>在下方选择你要观看的演唱会</p>
+            </div>
+        </div><br>
+
+        <div class="mdui-card mdui-center mdui-hoverable" style="border-radius: 16px;">
+            <div class="mdui-card-media">
+                <video id="video-player" autoplay controls width="100%" height="100%">
+                    <source src="视频地址" type="video/mp4">
+                </video>
+            </div>
+            <div class="mdui-card-content">
+                <div style="padding: 0.3rem;">
+                    选择演唱会：<select onchange="player.play(this)" appid="9sg0iTF1hjh1FpHP" callback="player" id="video-url"
+                        class="mdui-select" mdui-select="{position: 'top'}">
+                        <option value="1" selected>State 1</option>
+                        <option value="2">State 2</option>
+                        <option value="3">State 3</option>
+                        <option value="4">State 4</option>
+                        <option value="5">State 5</option>
+                        <option value="6">State 6</option>
+                    </select>
+                </div>
+                <div style="padding: 0.3rem;">
+                    选择播放节点：<select onchange="player.play(this)" appid="9sg0iTF1hjh1FpHP" callback="player"
+                        id="play-node" class="mdui-select" mdui-select="{position: 'top'}">
+                        <option value="1" selected>State 1</option>
+                        <option value="2">State 2</option>
+                        <option value="3">State 3</option>
+                        <option value="4">State 4</option>
+                        <option value="5">State 5</option>
+                        <option value="6">State 6</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+
+</script>
