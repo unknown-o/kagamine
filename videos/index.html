@@ -30,7 +30,7 @@
 
         <div class="mdui-card mdui-center mdui-hoverable" style="border-radius: 16px;">
             <div class="mdui-card-media">
-                <video id="video-player" autoplay controls width="100%" height="100%">
+                <video id="video-player" autoplay preload controls width="100%" height="100%">
                     <source src="" type="video/mp4">
                 </video>
             </div>
@@ -105,11 +105,8 @@
         },
     }
     window.play = function (key, timestamp, b_this) {
-       
         video_url = $("#play-node").val() + $("#video-url").val() + "?key=" + key + "&timestamp=" + timestamp
         $("#video-player").attr("src", video_url)
-        console.log(video_url)
-        
     }
 
     player.setup()
