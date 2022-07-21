@@ -83,6 +83,7 @@
             }, "get", true)
         },
         request_api: function (path, args, callback, method, show_result) {
+            $("#is-loading").show(200)
             $.ajax({
                 method: method,
                 url: path,
@@ -91,6 +92,7 @@
                 async: true,
                 dataType: "json",
                 success: function (rdata) {
+                    $("#is-loading").hide(200)
                     if (show_result && rdata.msg != undefined) {
                         mdui.snackbar({
                             message: rdata.msg,
@@ -102,6 +104,7 @@
                     }
                 },
                 error: function (ex) {
+                    $("#is-loading").hide(200)
                     mdui.snackbar({
                         message: "抱歉，请求失败",
                         position: 'right-top',
