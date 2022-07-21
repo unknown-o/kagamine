@@ -71,7 +71,7 @@
         },
         setup: function () {
             this.default_variable()
-            this.request_api("/static/video_info.json", "", function (rdata) {
+            this.request_api(this.video_info, "", function (rdata) {
                 rdata.video_info.forEach(element => {
                     $("#video-url").append("<option value='" + element.url + "''>" + element.name + "</option>")
                 });
