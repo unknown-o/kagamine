@@ -1,0 +1,34 @@
+{
+    "video_info": [
+        {
+            "name": "Happy 14th Birthday Party「Two You ☆★」",
+            "url": "/video/kagamine/happy-14th-birthday-party_two-you.mp4",
+            "desc":"视频录制自直播间172479 全场回放 Happy 14th Birthday Party「Two You ☆★」 豊洲PIT 7月8日 夜场",
+            "from":"https://space.bilibili.com/6302748"
+        }
+    ],
+    "play_node":[
+        {
+            "id":"cloudflare",
+            "name":"Cloudflare",
+            "desc":"",
+            "base_url":"https://cf-dfile.potaa.top:8443",
+            "captcha":true
+        },
+        {
+            "id":"rainyun",
+            "name":"国内节点",
+            "desc":"",
+            "base_url":"https://cn-zz1-dfile.llilii.cn",
+            "captcha":true
+        },
+        {
+            "id":"onedrive",
+            "name":"OneDrive",
+            "desc":"免验证",
+            "base_url":"https://drive.llilii.cn",
+            "captcha":false
+        }
+    ],
+    "msg":"如果无法播放可更换节点"
+}

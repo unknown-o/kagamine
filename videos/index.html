@@ -31,36 +31,86 @@
         <div class="mdui-card mdui-center mdui-hoverable" style="border-radius: 16px;">
             <div class="mdui-card-media">
                 <video id="video-player" autoplay controls width="100%" height="100%">
-                    <source src="视频地址" type="video/mp4">
+                    <source src="" type="video/mp4">
                 </video>
             </div>
             <div class="mdui-card-content">
                 <div style="padding: 0.3rem;">
-                    选择演唱会：<select onchange="player.play(this)" appid="9sg0iTF1hjh1FpHP" callback="player" id="video-url"
-                        class="mdui-select" mdui-select="{position: 'top'}">
-                        <option value="1" selected>State 1</option>
-                        <option value="2">State 2</option>
-                        <option value="3">State 3</option>
-                        <option value="4">State 4</option>
-                        <option value="5">State 5</option>
-                        <option value="6">State 6</option>
+                    选择演唱会：<br>
+                    <select id="video-url" class="mdui-select">
                     </select>
                 </div>
                 <div style="padding: 0.3rem;">
-                    选择播放节点：<select onchange="player.play(this)" appid="9sg0iTF1hjh1FpHP" callback="player"
-                        id="play-node" class="mdui-select" mdui-select="{position: 'top'}">
-                        <option value="1" selected>State 1</option>
-                        <option value="2">State 2</option>
-                        <option value="3">State 3</option>
-                        <option value="4">State 4</option>
-                        <option value="5">State 5</option>
-                        <option value="6">State 6</option>
-                    </select>
+                    <div class="mdui-row">
+                        <div class="mdui-col-xs-5">
+                            选择播放节点：<br>
+                            <select id="play-node" class="mdui-select">
+                            </select>
+                        </div>
+                        <div class="mdui-col-xs-7">
+                            <br>
+                            <a onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP" callback="play"
+                                class="mdui-float-right mdui-btn mdui-ripple">开始播放</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
 <script>
+    var player = {
+        default_variable: function () {
+            this.video_info = "http://127.0.0.1/static/video_info.json"
+        },
+        setup: function () {
+            this.default_variable()
+            this.request_api("/static/video_info.json", "", function (rdata) {
+                rdata.video_info.forEach(element => {
+                    $("#video-url").append("<option value='" + element.url + "''>" + element.name + "</option>")
+                });
+                rdata.play_node.forEach(element => {
+                    $("#play-node").append("<option value='" + element.base_url + "''>" + element.name + "</option>")
+                });
+                new mdui.Select("#play-node", { position: 'top' })
+                new mdui.Select("#video-url", { position: 'top' });
+            }, "get", true)
+        },
+        request_api: function (path, args, callback, method, show_result) {
+            $.ajax({
+                method: method,
+                url: path,
+                data: args,
+                timeout: 36000,
+                async: true,
+                dataType: "json",
+                success: function (rdata) {
+                    if (show_result && rdata.msg != undefined) {
+                        mdui.snackbar({
+                            message: rdata.msg,
+                            position: 'right-top',
+                        });
+                    }
+                    if (callback) {
+                        callback(rdata)
+                    }
+                },
+                error: function (ex) {
+                    mdui.snackbar({
+                        message: "抱歉，请求失败",
+                        position: 'right-top',
+                    });
+                }
+            });
+        },
+    }
+    window.play = function (key, timestamp, b_this) {
+       
+        video_url = $("#play-node").val() + $("#video-url").val() + "?key=" + key + "&timestamp=" + timestamp
+        $("#video-player").attr("src", video_url)
+        console.log(video_url)
+        
+    }
 
+    player.setup()
 </script>
