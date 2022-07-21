@@ -20,18 +20,21 @@
         <div class="mdui-progress-indeterminate"></div>
     </div>
     <div id="page-index" class="mdui-container" style="max-width: 800px;">
-        <h1 class="doc-title mdui-text-color-theme">Kagaminefans</h1>
-        <div class="doc-chapter">
-            <div class="mdui-typo">
-                <p>如果天使有声音，那么一定是镜音的天籁！</p>
-            </div>
-        </div><br>
+        <div style="padding: 1rem;">
+            <h1 class="doc-title mdui-text-color-theme">Kagaminefans</h1>
+            <div class="doc-chapter">
+                <div class="mdui-typo">
+                    <p>如果天使有声音，那么一定是镜音的天籁！</p>
+                </div>
+            </div><br>
+        </div>
         <div class="mdui-row-xs-2 mdui-row-gapless">
             <div class="mdui-col" id="imageBoxCol-0"></div>
             <div class="mdui-col" id="imageBoxCol-1"></div>
         </div><br>
         <center>
-            <button onclick="loadMore()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
+            <button onclick="loadMore()"
+                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
         </center>
     </div>
     <div style="display: none;">
@@ -40,7 +43,8 @@
                 <div class="mdui-card-media">
                     <img onclick="window.open($(this).attr('origin-src'))" id='imgBoxId-imageSrc' src="" />
                     <div class="mdui-card-menu">
-                        <button onclick="like('imgBoxId','image-name')" class="mdui-btn mdui-btn-icon mdui-color-theme-accent mdui-ripple">
+                        <button onclick="like('imgBoxId','image-name')"
+                            class="mdui-btn mdui-btn-icon mdui-color-theme-accent mdui-ripple">
                             <i class="mdui-icon material-icons">favorite</i>
                         </button> &nbsp;
                         <div class="mdui-float-right mdui-card-primary-subtitle">
@@ -113,7 +117,7 @@
     </div>
 </body>
 <script>
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         var scrolled = $(window).scrollTop();
         if (scrolled > 100) {
             $("#back-to-top").removeClass("mdui-fab-hide")
@@ -149,12 +153,12 @@
         request_api("get_likes", {
             key: key,
             timestamp: timestamp
-        }, function(rdata) {
+        }, function (rdata) {
             window.likes = rdata.data
-            $.get(imgListURL, function(rdata) {
+            $.get(imgListURL, function (rdata) {
                 window.imgList = rdata
                 loadMore()
-                setInterval(function() {
+                setInterval(function () {
                     if (loadingCount == 0) {
                         autoLoadImage()
                     }
@@ -165,7 +169,7 @@
 
     function request_api(functionName, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
         $(disableBtnId).attr("disabled", true);
-        setTimeout(function() {
+        setTimeout(function () {
             $(disableBtnId).attr("disabled", false);
         }, 200000)
         $("#isLoading").show(100)
@@ -174,7 +178,7 @@
             url: 'https://api.llilii.cn/kagamine/' + functionName + '.php',
             data: args,
             dataType: 'json',
-            success: function(rdata) {
+            success: function (rdata) {
                 if (showResults) {
                     mdui.snackbar({
                         message: rdata.msg,
@@ -192,7 +196,7 @@
                     callback(rdata)
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 $("#isLoading").hide(100)
                 $(disableBtnId).attr("disabled", false)
                 callback({})
@@ -220,7 +224,7 @@
     function saveAdvancedSettings() {
         window.imgListURL = $("#imgListURL").val()
         setCookie("imgListURL", imgListURL, 30)
-        $.get(imgListURL, function(rdata) {
+        $.get(imgListURL, function (rdata) {
             window.imgList = rdata
         });
         mdui.snackbar({
@@ -237,7 +241,7 @@
         if (showImageDirect) {
             autoLoadImage()
         } else {
-            setTimeout(function() {
+            setTimeout(function () {
                 autoLoadImage()
             }, 6000);
         }
@@ -252,7 +256,7 @@
         }
     }
 
-    $("#autoLoadImages").click(function() {
+    $("#autoLoadImages").click(function () {
         mdui.snackbar({
             message: "设置保存成功！",
             position: 'right-top'
@@ -261,7 +265,7 @@
         autoLoadImages = $("#autoLoadImages").prop("checked")
     })
 
-    $("#showLoadingStatus").click(function() {
+    $("#showLoadingStatus").click(function () {
         mdui.snackbar({
             message: "设置保存成功！",
             position: 'right-top'
@@ -270,7 +274,7 @@
         showLoadingStatus = $("#showLoadingStatus").prop("checked")
     })
 
-    $("#showImageDirect").click(function() {
+    $("#showImageDirect").click(function () {
         mdui.snackbar({
             message: "设置保存成功！",
             position: 'right-top'
@@ -327,12 +331,12 @@
         loadingStatus()
         var xhr = new XMLHttpRequest();
         xhr.open('GET', imgURL);
-        xhr.onprogress = function(event) {
+        xhr.onprogress = function (event) {
             if (event.lengthComputable) {
                 $("#" + imgBoxId.toString() + "-loadingStatus").css("width", parseInt((event.loaded / event.total) * 100).toString() + "%")
             }
         };
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             switch (xhr.readyState) {
                 case 4:
                     if (loadingCount > 0) {
@@ -374,7 +378,7 @@
             image_name: image_name,
             timestamp: timestamp,
             key: key
-        }, function(rdata) {
+        }, function (rdata) {
             $("#" + imagebox_id.toString() + "-likes").text(rdata.likes)
             $("#" + imagebox_id.toString() + "-main").attr("like", "yes")
         }, true, false, false)
@@ -413,7 +417,7 @@
             if (showLoadingStatus) {
                 $("#" + imgBoxId.toString() + "-main").show(200)
             }
-            loadImage(imgURL, imgBoxId, function(imgBoxId, imgURL) {
+            loadImage(imgURL, imgBoxId, function (imgBoxId, imgURL) {
                 if (!showLoadingStatus) {
                     $("#" + imgBoxId.toString() + "-main").show(200)
                 }
