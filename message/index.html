@@ -156,6 +156,13 @@
         }
 
         window.like = function report(token, timestamp, b_this) {
+            if ($("#c-" + $(b_this).attr('cid')).attr("like") == "yes") {
+                mdui.snackbar({
+                    message: '点赞太快啦~',
+                    position: 'right-top'
+                });
+                return false
+            }
             request_api('message/like/' + $(b_this).attr('cid'), {
                 token: token,
                 timestamp: timestamp,
@@ -163,6 +170,7 @@
             }, 'post', {}, function (rdata) {
                 if (rdata.code == 1) {
                     $("#likebox-" + $(b_this).attr('cid')).text(rdata.data.likes)
+                    $("#c-" + $(b_this).attr('cid')).attr("like", "yes")
                 }
             }, true, 'message-send-btn')
         }
