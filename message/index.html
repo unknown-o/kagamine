@@ -64,6 +64,25 @@
                     </div>
                 </div>
                 <br>
+
+                <div id="c-CARD_ID" class="mdui-card" style="border-radius: 8px;">
+                    <div class="mdui-card-primary">
+                        <div class="mdui-card-primary-title">排序方式</div>
+                        <div class="mdui-card-primary-subtitle">你想按照什么排序留言？</div>
+                    </div>
+                    <div class="mdui-card-content">
+                        每次显示50条留言！<br>
+                        如遇到违规言论请举报！<br>
+                        <select class="mdui-select" onchange="get_message($(this).val(), 50)"
+                            mdui-select="{position: 'top'}">
+                            <option value="likes">按照点赞量排序</option>
+                            <option value="time">按照发送时间排序</option>
+                            <option value="random">看缘分</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br>
             </div>
             <div id="message-body" style="display:none;" class="mdui-col-xs-12 mdui-col-sm-7">
 
@@ -99,24 +118,28 @@
         </div>
     </div>
     <script>
-        get_message('random', 50)
+        get_message('likes', 50)
         function get_message(sort, limit) {
-            request_api('message', false, 'get', {
-                sort: sort,
-                limit: limit
-            }, function (rdata) {
-                rdata.data.forEach(element => {
-                    var message_card = $("#message-card")
-                        .html()
-                        .replace(/CARD_ID/g, element.id)
-                        .replace(/LIKES/g, element.likes)
-                        .replace(/NICKNAME/g, element.nickname)
-                        .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
-                        .replace(/MESSAGE_BODY/g, element.message)
-                    $("#message-body").append(message_card)
-                });
-                $("#message-body").show(200)
-            }, true, 'message-send-btn')
+            $("#message-body").hide(200, function () {
+                request_api('message', false, 'get', {
+                    sort: sort,
+                    limit: limit
+                }, function (rdata) {
+
+                    $("#message-body").empty()
+                    rdata.data.forEach(element => {
+                        var message_card = $("#message-card")
+                            .html()
+                            .replace(/CARD_ID/g, element.id)
+                            .replace(/LIKES/g, element.likes)
+                            .replace(/NICKNAME/g, element.nickname)
+                            .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
+                            .replace(/MESSAGE_BODY/g, element.message)
+                        $("#message-body").append(message_card)
+                    });
+                    $("#message-body").show(200)
+                }, true, 'message-send-btn')
+            })
         }
 
         window.report = function report(token, timestamp, b_this) {
