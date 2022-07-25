@@ -13,7 +13,7 @@
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
     <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
-    <script src="/static/captcha.js"></script>
+    <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
@@ -71,12 +71,18 @@
                         <div class="mdui-card-primary-subtitle">你想按照什么排序留言？</div>
                     </div>
                     <div class="mdui-card-content">
-                        每次显示50条留言！<br>
-                        如遇到违规言论请举报！<br>
-                        <select class="mdui-select" onchange="get_message($(this).val(), 50)"
+                        显示未经审核的留言：
+                        <label class="mdui-switch">
+                            <input id="autoLoadImages"
+                                onchange="window.show_unaudited=!window.show_unaudited;get_message($('#sort').val(), 50,window.show_unaudited)"
+                                type="checkbox" />
+                            <i class="mdui-switch-icon"></i>
+                        </label><br>
+                        留言的排序方式：<select id="sort" class="mdui-select"
+                            onchange="get_message($(this).val(), 50,window.show_unaudited)"
                             mdui-select="{position: 'top'}">
-                            <option value="likes">按照点赞量排序</option>
-                            <option value="time">按照发送时间排序</option>
+                            <option value="likes">点赞量</option>
+                            <option value="time">发送时间</option>
                             <option value="random">看缘分</option>
                         </select>
                     </div>
@@ -111,19 +117,21 @@
                     <div class="mdui-card-primary-title">NICKNAME</div>
                     <div class="mdui-card-primary-subtitle">SEND_TIME</div>
                     <div class="mdui-divider" style="margin: 5px 0px"></div>
-                    MESSAGE_BODY
+                    MESSAGE_BODY ADD_INFO
                 </div>
             </div>
             <br>
         </div>
     </div>
     <script>
+        window.show_unaudited = false
         get_message('likes', 50)
-        function get_message(sort, limit) {
+        function get_message(sort, limit, show_unaudited) {
             $("#message-body").hide(200, function () {
                 request_api('message', false, 'get', {
                     sort: sort,
-                    limit: limit
+                    limit: limit,
+                    show_unaudited: show_unaudited
                 }, function (rdata) {
 
                     $("#message-body").empty()
@@ -135,6 +143,7 @@
                             .replace(/NICKNAME/g, element.nickname)
                             .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
                             .replace(/MESSAGE_BODY/g, element.message)
+                            .replace(/ADD_INFO/g, element.status < 1 ? '（未经审核的）' : '')
                         $("#message-body").append(message_card)
                     });
                     $("#message-body").show(200)
