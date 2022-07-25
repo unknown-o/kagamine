@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>Kagaminefans</title>
+    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
+    <meta name="description" content="镜面双生，最美和音！">
+    <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
+    <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
+</head>
+
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div style="display: none;" id="is-loading" class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div class="mdui-container" id="pjax-container" style="max-width: 800px;">
+        <div style="padding: 1rem;">
+            <h1 class="doc-title mdui-text-color-theme">
+                <a class="mdui-float-right mdui-btn mdui-btn-icon mdui-text-color-theme" href="/">
+                    <i class="mdui-icon material-icons">arrow_back</i>
+                </a>
+                MessageBoard
+            </h1>
+            <div class="doc-chapter">
+                <div class="mdui-typo">
+                    <p>“我永远喜欢镜音双子！”</p>
+                </div>
+            </div>
+        </div>
+        <div class="mdui-row">
+            <div class="mdui-col-xs-12 mdui-col-sm-5">
+                <div class="mdui-card" style="border-radius: 8px;">
+                    <div class="mdui-card-primary">
+                        <div class="mdui-card-primary-title">提交留言</div>
+                        <div class="mdui-card-primary-subtitle">你想对双子说什么？</div>
+                    </div>
+                    <div class="mdui-card-content">
+                        <div class="mdui-textfield">
+                            <label class="mdui-textfield-label">昵称</label>
+                            <input placeholder="Kagamine Len" class="mdui-textfield-input" type="text" />
+                        </div>
+                        <div class="mdui-textfield">
+                            <label class="mdui-textfield-label">邮箱</label>
+                            <input placeholder="len@kagamine.top" class="mdui-textfield-input" type="email" />
+                        </div>
+                        <div class="mdui-textfield">
+                            <label class="mdui-textfield-label">留言</label>
+                            <textarea placeholder="我想说..." class="mdui-textfield-input" rows="4"></textarea>
+                        </div>
+                    </div>
+                    <div class="mdui-card-actions">
+                        <button onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP" callback="submit"
+                            class="mdui-float-right mdui-btn mdui-ripple">提交留言</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-col-xs-12 mdui-col-sm-7" style="border-radius: 8px;">
+                <div class="mdui-card">
+                    <div class="mdui-card-content">
+                        <div class="mdui-card-menu">
+                            <button mdui-tooltip="{content: '举报这条留言'}"
+                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
+                                <i class="mdui-icon material-icons">warning</i>
+                            </button>
+                            <button mdui-tooltip="{content: '给这条留言点赞'}"
+                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
+                                <i class="mdui-icon material-icons">favorite</i>
+                            </button>&nbsp;
+                            <div class="mdui-float-right mdui-card-primary-subtitle">
+                                <div id="imgBoxId-likes">0</div>
+                            </div>
+                        </div>
+                        <div class="mdui-card-primary-title">测试1</div>
+                        <div class="mdui-card-primary-subtitle">2022/2/2 - 18:12</div>
+                        <div class="mdui-divider" style="margin: 5px 0px"></div>
+                        我永远喜欢镜音双子！
+                    </div>
+                </div>
+                <div class="mdui-card">
+                    <div class="mdui-card-content">
+                        <div class="mdui-card-menu">
+                            <button mdui-tooltip="{content: '举报这条留言'}"
+                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
+                                <i class="mdui-icon material-icons">warning</i>
+                            </button>
+                            <button mdui-tooltip="{content: '给这条留言点赞'}"
+                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
+                                <i class="mdui-icon material-icons">favorite</i>
+                            </button>&nbsp;
+                            <div class="mdui-float-right mdui-card-primary-subtitle">
+                                <div id="imgBoxId-likes">0</div>
+                            </div>
+                        </div>
+                        <div class="mdui-card-primary-title">测试1</div>
+                        <div class="mdui-card-primary-subtitle">2022/2/2 - 18:12</div>
+                        <div class="mdui-divider" style="margin: 5px 0px"></div>
+                        我永远喜欢镜音双子！
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.submit = function (token, timestamp, b_this) {
+            mdui.dialog({
+                title: '是否提交？',
+                content: '为保证内容安全，防止提交广告、违法等信息，提交后将通过人工审核后显示。',
+                buttons: [
+                    {
+                        text: '取消'
+                    },
+                    {
+                        text: '确认',
+                        onClick: function (inst) {
+                            mdui.alert('点击确认按钮的回调');
+                        }
+                    }
+                ]
+            });
+        }
+    </script>
+</body>
