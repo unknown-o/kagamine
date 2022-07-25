@@ -153,12 +153,7 @@
             position: 'right-top'
         });
     } else {
-        timestamp = Date.parse(new Date()) / 1000
-        key = $.md5('KAGAMINE LEN LOVE RIN !' + timestamp)
-        request_api("get_likes", {
-            key: key,
-            timestamp: timestamp
-        }, function (rdata) {
+        request_api("likes", 'get', {}, function (rdata) {
             window.likes = rdata.data
             $.get(imgListURL, function (rdata) {
                 window.imgList = rdata
@@ -172,15 +167,21 @@
         }, true, false, false)
     }
 
-    function request_api(functionName, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
+    function request_api(apiPath, method, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
+        var timestamp = Date.parse(new Date()) / 1000
+        var key = $.md5('Kagamine Yes!' + timestamp.toString())
+        var auth = btoa(timestamp.toString() + '__' + key)
         $(disableBtnId).attr("disabled", true);
         setTimeout(function () {
             $(disableBtnId).attr("disabled", false);
         }, 200000)
         $("#isLoading").show(100)
         $.ajax({
-            type: 'post',
-            url: 'https://api.llilii.cn/kagamine/' + functionName + '.php',
+            type: method,
+            headers: {
+                "Authorization": "Basic " + auth
+            },
+            url: 'https://api.llilii.cn/kagamine/' + apiPath,
             data: args,
             dataType: 'json',
             success: function (rdata) {
@@ -206,7 +207,7 @@
                 $(disableBtnId).attr("disabled", false)
                 callback({})
                 mdui.snackbar({
-                    message: "请求接口[" + functionName + "]时，出现了一个致命错误！",
+                    message: "请求接口[" + apiPath + "]时，出现了一个致命错误！",
                     position: 'right-top'
                 })
             },
@@ -377,16 +378,12 @@
             });
             return false
         }
-        timestamp = Date.parse(new Date()) / 1000
-        key = $.md5('KAGAMINE LEN LOVE RIN !' + timestamp)
-        request_api("like_image", {
-            image_name: image_name,
-            timestamp: timestamp,
-            key: key
-        }, function (rdata) {
-            $("#" + imagebox_id.toString() + "-likes").text(rdata.likes)
-            $("#" + imagebox_id.toString() + "-main").attr("like", "yes")
-        }, true, false, false)
+        request_api("likes/" + image_name.split('.')[0].split('_')[0] + '/' + image_name.split('.')[0].split('_')[1].split('p')[1]
+            , 'post', {}, function (rdata) {
+                $("#" + imagebox_id.toString() + "-likes").text(rdata.data.likes)
+                $("#" + imagebox_id.toString() + "-main").attr("like", "yes")
+            }, true, false, false
+        )
     }
 
     function imgBoxCreate(colId) {
@@ -402,8 +399,8 @@
         $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
         $("#" + imgBoxId.toString() + "-imageSrc").attr("origin-src", base_url_origin + "/" + image_name);
         try {
-            if (likes[image_name] != undefined) {
-                $("#" + imgBoxId.toString() + "-likes").text(likes[image_name]);
+            if (likes[image_name.split('.')[0]] != undefined) {
+                $("#" + imgBoxId.toString() + "-likes").text(likes[image_name.split('.')[0]]);
             }
         } catch (error) {
             console.log("Failed to get likes!")
