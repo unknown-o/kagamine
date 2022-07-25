@@ -266,7 +266,7 @@
 
     $("#autoLoadImages").click(function () {
         mdui.snackbar({
-            message: "设置保存成功！",
+            message: "保存成功，请刷新页面以立即生效配置！",
             position: 'right-top'
         })
         setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
