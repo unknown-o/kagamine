@@ -158,11 +158,13 @@
             $.get(imgListURL, function (rdata) {
                 window.imgList = rdata
                 loadMore()
-                setInterval(function () {
-                    if (loadingCount == 0) {
-                        autoLoadImage()
-                    }
-                }, 6000);
+                if (autoLoadImages) {
+                    setInterval(function () {
+                        if (loadingCount == 0) {
+                            autoLoadImage()
+                        }
+                    }, 6000);
+                }
             })
         }, true, false, false)
     }
