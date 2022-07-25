@@ -8,10 +8,12 @@
     <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
     <meta name="description" content="镜面双生，最美和音！">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
-    <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
+    <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
+    <script src="/static/captcha.js"></script>
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
@@ -42,86 +44,214 @@
                     <div class="mdui-card-content">
                         <div class="mdui-textfield">
                             <label class="mdui-textfield-label">昵称</label>
-                            <input placeholder="Kagamine Len" class="mdui-textfield-input" type="text" />
+                            <input id="s-nickname" placeholder="Kagamine Len" class="mdui-textfield-input"
+                                type="text" />
                         </div>
                         <div class="mdui-textfield">
                             <label class="mdui-textfield-label">邮箱</label>
-                            <input placeholder="len@kagamine.top" class="mdui-textfield-input" type="email" />
+                            <input id="s-email" placeholder="len@kagamine.top" class="mdui-textfield-input"
+                                type="email" />
                         </div>
                         <div class="mdui-textfield">
                             <label class="mdui-textfield-label">留言</label>
-                            <textarea placeholder="我想说..." class="mdui-textfield-input" rows="4"></textarea>
+                            <textarea id="s-message" placeholder="我想说..." class="mdui-textfield-input"
+                                rows="4"></textarea>
                         </div>
                     </div>
                     <div class="mdui-card-actions">
-                        <button onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP" callback="submit"
-                            class="mdui-float-right mdui-btn mdui-ripple">提交留言</button>
+                        <button id="message-send-btn" onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP"
+                            callback="submit" class="mdui-float-right mdui-btn mdui-ripple">提交留言</button>
                     </div>
                 </div>
+                <br>
             </div>
-            <div class="mdui-col-xs-12 mdui-col-sm-7" style="border-radius: 8px;">
-                <div class="mdui-card">
-                    <div class="mdui-card-content">
-                        <div class="mdui-card-menu">
-                            <button mdui-tooltip="{content: '举报这条留言'}"
-                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
-                                <i class="mdui-icon material-icons">warning</i>
-                            </button>
-                            <button mdui-tooltip="{content: '给这条留言点赞'}"
-                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
-                                <i class="mdui-icon material-icons">favorite</i>
-                            </button>&nbsp;
-                            <div class="mdui-float-right mdui-card-primary-subtitle">
-                                <div id="imgBoxId-likes">0</div>
-                            </div>
-                        </div>
-                        <div class="mdui-card-primary-title">测试1</div>
-                        <div class="mdui-card-primary-subtitle">2022/2/2 - 18:12</div>
-                        <div class="mdui-divider" style="margin: 5px 0px"></div>
-                        我永远喜欢镜音双子！
-                    </div>
-                </div>
-                <div class="mdui-card">
-                    <div class="mdui-card-content">
-                        <div class="mdui-card-menu">
-                            <button mdui-tooltip="{content: '举报这条留言'}"
-                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
-                                <i class="mdui-icon material-icons">warning</i>
-                            </button>
-                            <button mdui-tooltip="{content: '给这条留言点赞'}"
-                                class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
-                                <i class="mdui-icon material-icons">favorite</i>
-                            </button>&nbsp;
-                            <div class="mdui-float-right mdui-card-primary-subtitle">
-                                <div id="imgBoxId-likes">0</div>
-                            </div>
-                        </div>
-                        <div class="mdui-card-primary-title">测试1</div>
-                        <div class="mdui-card-primary-subtitle">2022/2/2 - 18:12</div>
-                        <div class="mdui-divider" style="margin: 5px 0px"></div>
-                        我永远喜欢镜音双子！
-                    </div>
-                </div>
+            <div id="message-body" style="display:none;" class="mdui-col-xs-12 mdui-col-sm-7">
+
             </div>
         </div>
     </div>
+    <div style="display: none;">
+        <div id="message-card">
+            <div id="c-CARD_ID" class="mdui-card" style="border-radius: 8px;">
+                <div class="mdui-card-content">
+                    <div class="mdui-card-menu">
+                        <button onclick="u_captcha.captcha(this)" cid="CARD_ID" appid="9sg0iTF1hjh1FpHP"
+                            callback="report" mdui-tooltip="{content: '举报这条留言'}"
+                            class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
+                            <i class="mdui-icon material-icons">warning</i>
+                        </button>
+                        <button onclick="u_captcha.captcha(this)" cid="CARD_ID" appid="9sg0iTF1hjh1FpHP" callback="like"
+                            mdui-tooltip="{content: '给这条留言点赞'}"
+                            class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
+                            <i class="mdui-icon material-icons">favorite</i>
+                        </button>&nbsp;
+                        <div class="mdui-float-right mdui-card-primary-subtitle">
+                            <div id="likebox-CARD_ID">LIKES</div>
+                        </div>
+                    </div>
+                    <div class="mdui-card-primary-title">NICKNAME</div>
+                    <div class="mdui-card-primary-subtitle">SEND_TIME</div>
+                    <div class="mdui-divider" style="margin: 5px 0px"></div>
+                    MESSAGE_BODY
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
     <script>
+        get_message('random', 50)
+        function get_message(sort, limit) {
+            request_api('message', false, 'get', {
+                sort: sort,
+                limit: limit
+            }, function (rdata) {
+                rdata.data.forEach(element => {
+                    var message_card = $("#message-card")
+                        .html()
+                        .replace(/CARD_ID/g, element.id)
+                        .replace(/LIKES/g, element.likes)
+                        .replace(/NICKNAME/g, element.nickname)
+                        .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
+                        .replace(/MESSAGE_BODY/g, element.message)
+                    $("#message-body").append(message_card)
+                });
+                $("#message-body").show(200)
+            }, true, 'message-send-btn')
+        }
+
+        window.report = function report(token, timestamp, b_this) {
+            request_api('message/report/' + $(b_this).attr('cid'), {
+                token: token,
+                timestamp: timestamp,
+                appid: $(b_this).attr('appid')
+            }, 'post', {}, function (rdata) {
+                if (rdata.code == 1) {
+                    $("#c-" + $(b_this).attr('cid')).hide(200)
+                }
+                mdui.alert(rdata.msg)
+            }, false, 'message-send-btn')
+        }
+
+        window.like = function report(token, timestamp, b_this) {
+            request_api('message/like/' + $(b_this).attr('cid'), {
+                token: token,
+                timestamp: timestamp,
+                appid: $(b_this).attr('appid')
+            }, 'post', {}, function (rdata) {
+                if (rdata.code == 1) {
+                    $("#likebox-" + $(b_this).attr('cid')).text(rdata.data.likes)
+                }
+            }, true, 'message-send-btn')
+        }
+
         window.submit = function (token, timestamp, b_this) {
-            mdui.dialog({
-                title: '是否提交？',
-                content: '为保证内容安全，防止提交广告、违法等信息，提交后将通过人工审核后显示。',
-                buttons: [
-                    {
-                        text: '取消'
-                    },
-                    {
-                        text: '确认',
-                        onClick: function (inst) {
-                            mdui.alert('点击确认按钮的回调');
+            if ($("#s-nickname").val() == "" ||
+                $("#s-email").val() == "" ||
+                $("#s-message").val() == ""
+            ) {
+                mdui.alert("提交失败！表单缺失！")
+                return false
+            }
+            request_api('message', {
+                token: token,
+                timestamp: timestamp,
+                appid: $(b_this).attr('appid')
+            }, 'post', {
+                nickname: $("#s-nickname").val(),
+                email: $("#s-email").val(),
+                message: $("#s-message").val()
+            }, function (rdata) {
+                if (rdata.code == 1) {
+                    $("#s-nickname").val("")
+                    $("#s-email").val("")
+                    $("#s-message").val("")
+                }
+                mdui.alert(rdata.msg)
+            }, false, 'message-send-btn')
+        }
+
+        function request_api(path, auth, method, args, callback, show_result, disable_btn) {
+            if (auth) {
+                var key = auth['token']
+                var timestamp = auth['timestamp']
+                var appid = auth['appid']
+            } else {
+                var timestamp = Date.parse(new Date()) / 1000
+                var key = $.md5('Kagamine Yes!' + timestamp.toString())
+                var appid = ''
+            }
+            var auth = btoa(timestamp.toString() + '__' + key)
+            $(disable_btn).attr("disabled", true);
+            setTimeout(function () {
+                $(disable_btn).attr("disabled", false);
+            }, 200000)
+            $("#is-loading").show(100)
+            $.ajax({
+                type: method,
+                headers: {
+                    "Authorization": "Basic " + auth,
+                    'X-UCaptcha-APPID': appid
+                },
+                url: 'https://api.llilii.cn/kagamine/' + path,
+                data: args,
+                dataType: 'json',
+                success: function (rdata) {
+                    if (show_result) {
+                        mdui.snackbar({
+                            message: rdata.msg,
+                            position: 'right-top'
+                        })
+                    }
+                    $("#is-loading").hide(100)
+                    $(disable_btn).attr("disabled", false)
+                    if (callback) {
+                        callback(rdata)
+                    }
+                },
+                error: function (ex) {
+                    $("#is-loading").hide(100)
+                    $(disable_btn).attr("disabled", false)
+                    try {
+                        rdata = ex.responseJSON
+                        if (show_result && rdata.msg != undefined) {
+                            mdui.snackbar({
+                                message: rdata.msg,
+                                position: 'right-top',
+                            });
+                        }
+                        if (callback) {
+                            callback(rdata)
                         }
                     }
-                ]
-            });
+                    catch (error) {
+                        console.log(error)
+                        mdui.snackbar({
+                            message: "请求接口[" + path + "]时，出现了一个致命错误！",
+                            position: 'right-top'
+                        })
+                    }
+                },
+            })
+        }
+
+        function timestamp2date(time) {
+            var date = new Date(Number(time) * 1000);
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            var hour = date.getHours().toString();
+            var minutes = date.getMinutes().toString();
+            var seconds = date.getSeconds().toString();
+            if (hour < 10) {
+                hour = "0" + hour;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d) + " " + hour + ":" + minutes + ":" + seconds;
         }
     </script>
 </body>
