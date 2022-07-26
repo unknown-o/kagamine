@@ -74,12 +74,12 @@
                         显示未经审核的留言：
                         <label class="mdui-switch">
                             <input id="autoLoadImages"
-                                onchange="window.show_unaudited=!window.show_unaudited;get_message($('#sort').val(), 50,window.show_unaudited)"
+                                onchange="window.show_unaudited=!window.show_unaudited;get_messages($('#sort').val(), 50,window.show_unaudited)"
                                 type="checkbox" />
                             <i class="mdui-switch-icon"></i>
                         </label><br>
                         留言的排序方式：<select id="sort" class="mdui-select"
-                            onchange="get_message($(this).val(), 50,window.show_unaudited)"
+                            onchange="get_messages($(this).val(), 50,window.show_unaudited)"
                             mdui-select="{position: 'top'}">
                             <option value="likes">点赞量</option>
                             <option value="time">发送时间</option>
@@ -90,7 +90,7 @@
 
                 <br>
             </div>
-            <div id="message-body" style="display:none;" class="mdui-col-xs-12 mdui-col-sm-7">
+            <div id="messages-body" style="display:none;" class="mdui-col-xs-12 mdui-col-sm-7">
 
             </div>
         </div>
@@ -125,16 +125,16 @@
     </div>
     <script>
         window.show_unaudited = false
-        get_message('likes', 50)
-        function get_message(sort, limit, show_unaudited) {
-            $("#message-body").hide(200, function () {
-                request_api('message', false, 'get', {
+        get_messages('likes', 50)
+        function get_messages(sort, limit, show_unaudited) {
+            $("#messages-body").hide(200, function () {
+                request_api('messages', false, 'get', {
                     sort: sort,
                     limit: limit,
                     show_unaudited: show_unaudited
                 }, function (rdata) {
 
-                    $("#message-body").empty()
+                    $("#messages-body").empty()
                     rdata.data.forEach(element => {
                         var message_card = $("#message-card")
                             .html()
@@ -144,15 +144,15 @@
                             .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
                             .replace(/MESSAGE_BODY/g, element.message)
                             .replace(/ADD_INFO/g, element.status < 1 ? '（未经审核的）' : '')
-                        $("#message-body").append(message_card)
+                        $("#messages-body").append(message_card)
                     });
-                    $("#message-body").show(200)
+                    $("#messages-body").show(200)
                 }, true, 'message-send-btn')
             })
         }
 
         window.report = function report(token, timestamp, b_this) {
-            request_api('message/report/' + $(b_this).attr('cid'), {
+            request_api('messages/report/' + $(b_this).attr('cid'), {
                 token: token,
                 timestamp: timestamp,
                 appid: $(b_this).attr('appid')
@@ -172,7 +172,7 @@
                 });
                 return false
             }
-            request_api('message/like/' + $(b_this).attr('cid'), {
+            request_api('messages/like/' + $(b_this).attr('cid'), {
                 token: token,
                 timestamp: timestamp,
                 appid: $(b_this).attr('appid')
