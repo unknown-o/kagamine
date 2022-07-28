@@ -138,4 +138,13 @@
             <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>OK</button>
         </div>
     </div>
+    <script>
+        switch (navigator.language || navigator.userLanguage) {
+            case "zh-CN":
+                window.location.replace('zh-CN');
+                break;
+            default:
+                break;
+        }
+    </script>
 </body>
