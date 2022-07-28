@@ -30,7 +30,7 @@
             </h1>
             <div class="doc-chapter">
                 <div class="mdui-typo">
-                    <p>“我永远喜欢镜音双子！”</p>
+                    <p>“I love Kagamine Forever”</p>
                 </div>
             </div>
         </div>
@@ -38,52 +38,52 @@
             <div class="mdui-col-xs-12 mdui-col-sm-5">
                 <div class="mdui-card" style="border-radius: 8px;">
                     <div class="mdui-card-primary">
-                        <div class="mdui-card-primary-title">提交留言</div>
-                        <div class="mdui-card-primary-subtitle">你想对双子说什么？</div>
+                        <div class="mdui-card-primary-title">Submit</div>
+                        <div class="mdui-card-primary-subtitle">What do you want to say to Kagamine？</div>
                     </div>
                     <div class="mdui-card-content">
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">昵称</label>
+                            <label class="mdui-textfield-label">Nickname</label>
                             <input id="s-nickname" placeholder="Kagamine Len" class="mdui-textfield-input"
                                 type="text" />
                         </div>
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">邮箱</label>
+                            <label class="mdui-textfield-label">eMail</label>
                             <input id="s-email" placeholder="len@kagamine.top" class="mdui-textfield-input"
                                 type="email" />
                         </div>
                         <div class="mdui-textfield">
-                            <label class="mdui-textfield-label">留言</label>
+                            <label class="mdui-textfield-label">Message</label>
                             <textarea id="s-message" placeholder="我想说..." class="mdui-textfield-input"
                                 rows="4"></textarea>
                         </div>
                     </div>
                     <div class="mdui-card-actions">
                         <button id="message-send-btn" onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP"
-                            callback="submit" class="mdui-float-right mdui-btn mdui-ripple">提交留言</button>
+                            callback="submit" class="mdui-float-right mdui-btn mdui-ripple">Submit~</button>
                     </div>
                 </div>
                 <br>
 
                 <div id="c-CARD_ID" class="mdui-card" style="border-radius: 8px;">
                     <div class="mdui-card-primary">
-                        <div class="mdui-card-primary-title">排序方式</div>
-                        <div class="mdui-card-primary-subtitle">你想按照什么排序留言？</div>
+                        <div class="mdui-card-primary-title">Display Settings</div>
+                        <div class="mdui-card-primary-subtitle">Sort by and others？</div>
                     </div>
                     <div class="mdui-card-content">
-                        显示未经审核的留言：
+                        Show Unaudited Comments：
                         <label class="mdui-switch">
                             <input id="autoLoadImages"
                                 onchange="window.show_unaudited=!window.show_unaudited;get_messages($('#sort').val(), 50,window.show_unaudited)"
                                 type="checkbox" />
                             <i class="mdui-switch-icon"></i>
                         </label><br>
-                        留言的排序方式：<select id="sort" class="mdui-select"
+                        Sort By：<select id="sort" class="mdui-select"
                             onchange="get_messages($(this).val(), 50,window.show_unaudited)"
                             mdui-select="{position: 'top'}">
-                            <option value="likes">点赞量</option>
-                            <option value="time">发送时间</option>
-                            <option value="random">看缘分</option>
+                            <option value="likes">Likes</option>
+                            <option value="time">Send Time</option>
+                            <option value="random">Random</option>
                         </select>
                     </div>
                 </div>
@@ -101,12 +101,12 @@
                 <div class="mdui-card-content">
                     <div class="mdui-card-menu">
                         <button onclick="u_captcha.captcha(this)" cid="CARD_ID" appid="9sg0iTF1hjh1FpHP"
-                            callback="report" mdui-tooltip="{content: '举报这条留言'}"
+                            callback="report" mdui-tooltip="{content: 'REPORT'}"
                             class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-amber">
                             <i class="mdui-icon material-icons">warning</i>
                         </button>
                         <button onclick="u_captcha.captcha(this)" cid="CARD_ID" appid="9sg0iTF1hjh1FpHP" callback="like"
-                            mdui-tooltip="{content: '给这条留言点赞'}"
+                            mdui-tooltip="{content: 'LIKE'}"
                             class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
                             <i class="mdui-icon material-icons">favorite</i>
                         </button>&nbsp;
@@ -143,7 +143,7 @@
                             .replace(/NICKNAME/g, element.nickname)
                             .replace(/SEND_TIME/g, timestamp2date(element.timestamp))
                             .replace(/MESSAGE_BODY/g, element.message)
-                            .replace(/ADD_INFO/g, element.status < 1 ? '（未经审核的）' : '')
+                            .replace(/ADD_INFO/g, element.status < 1 ? '（UNAUDITED）' : '')
                         $("#messages-body").append(message_card)
                     });
                     $("#messages-body").show(200)
@@ -167,7 +167,7 @@
         window.like = function report(token, timestamp, b_this) {
             if ($("#c-" + $(b_this).attr('cid')).attr("like") == "yes") {
                 mdui.snackbar({
-                    message: '点赞太快啦~',
+                    message: 'Upvote too fast~',
                     position: 'right-top'
                 });
                 return false
@@ -189,7 +189,7 @@
                 $("#s-email").val() == "" ||
                 $("#s-message").val() == ""
             ) {
-                mdui.alert("提交失败！表单缺失！")
+                mdui.alert("Submission Failed! wrong form!")
                 return false
             }
             request_api('message', {
@@ -266,7 +266,7 @@
                     catch (error) {
                         console.log(error)
                         mdui.snackbar({
-                            message: "请求接口[" + path + "]时，出现了一个致命错误！",
+                            message: "Failed to request interface [" + apiPath + "]!",
                             position: 'right-top'
                         })
                     }

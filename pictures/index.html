@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <title>PictureViewer - Kagaminefans</title>
-    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
-    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <meta name="keywords" content="Kagamine Len,Kagamine Rin,Kagamine,Rin,Len">
+    <meta name="description" content="This site is developed for Kagamine Len & Rin">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,7 +29,7 @@
             </h1>
             <div class="doc-chapter">
                 <div class="mdui-typo">
-                    <p>如果天使有声音，那么一定是镜音的天籁！</p>
+                    <p>If angels have voices, then it must be Kagamine's voice!</p>
                 </div>
             </div><br>
         </div>
@@ -39,7 +39,7 @@
         </div><br>
         <center>
             <button onclick="loadMore()"
-                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">加载更多~</button>
+                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">LOAD MORE</button>
         </center>
     </div>
     <div style="display: none;">
@@ -80,44 +80,44 @@
         </button>
     </div>
     <div class="mdui-dialog" id="settings-main">
-        <div class="mdui-dialog-title">显示设置</div>
+        <div class="mdui-dialog-title">Display Settings</div>
         <div class="mdui-dialog-content">
-            直接显示图片：
+            Show Direct: 
             <label class="mdui-switch">
                 <input id="showImageDirect" type="checkbox" />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br> 显示加载进度条：
+            <br>Show Loading Bar: 
             <label class="mdui-switch">
                 <input id="showLoadingStatus" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br> 自动加载图片补位：
+            <br>Auto Load Images: 
             <label class="mdui-switch">
                 <input id="autoLoadImages" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>
-            </label>
+            </label><br>
             <div class="mdui-panel mdui-panel-popout" mdui-panel>
                 <div class="mdui-panel-item">
                     <div class="mdui-panel-item-header">
-                        <div class="mdui-panel-item-title">高级设置</div>
+                        <div class="mdui-panel-item-title">Advanced Settings</div>
                         <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
                     </div>
                     <div class="mdui-panel-item-body">
                         <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">图像列表</label>
+                            <label class="mdui-textfield-label">Image List</label>
                             <input id="imgListURL" class="mdui-textfield-input" type="text" />
                         </div>
                         <div class="mdui-panel-item-actions">
-                            <button class="mdui-btn mdui-ripple" mdui-panel-item-close>关闭</button>
-                            <button onclick="saveAdvancedSettings()" class="mdui-btn mdui-ripple">保存</button>
+                            <button class="mdui-btn mdui-ripple" mdui-panel-item-close>CLOSE</button>
+                            <button onclick="saveAdvancedSettings()" class="mdui-btn mdui-ripple">SAVE</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="mdui-dialog-actions">
-            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>关闭</button>
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>CLOSE</button>
         </div>
     </div>
 </body>
@@ -149,7 +149,7 @@
     if (imgListURL == "" || imgListURL == null || imgListURL == undefined) {
         setDefaultSettings()
         mdui.snackbar({
-            message: '加载图片列表失败！请刷新重试！',
+            message: 'Failed to load image list',
             position: 'right-top'
         });
     } else {
@@ -209,7 +209,7 @@
                 $(disableBtnId).attr("disabled", false)
                 callback({})
                 mdui.snackbar({
-                    message: "请求接口[" + apiPath + "]时，出现了一个致命错误！",
+                    message: "Failed to request interface [" + apiPath + "]!",
                     position: 'right-top'
                 })
             },
@@ -236,7 +236,7 @@
             window.imgList = rdata
         });
         mdui.snackbar({
-            message: '保存成功！',
+            message: 'Saved!',
             position: 'right-top'
         });
     }
@@ -266,7 +266,7 @@
 
     $("#autoLoadImages").click(function () {
         mdui.snackbar({
-            message: "保存成功，请刷新页面以立即生效配置！",
+            message: "Saved! Please refresh the page!",
             position: 'right-top'
         })
         setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
@@ -275,7 +275,7 @@
 
     $("#showLoadingStatus").click(function () {
         mdui.snackbar({
-            message: "设置保存成功！",
+            message: "Saved！",
             position: 'right-top'
         })
         setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
@@ -284,7 +284,7 @@
 
     $("#showImageDirect").click(function () {
         mdui.snackbar({
-            message: "设置保存成功！",
+            message: "Saved！",
             position: 'right-top'
         })
         setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
@@ -355,7 +355,7 @@
                         callback(imgBoxId, imgURL)
                     } else {
                         mdui.snackbar({
-                            message: '抱歉，图片加载失败！',
+                            message: 'Sorry，Failed to load image！',
                             position: 'right-top'
                         });
                     }
@@ -375,7 +375,7 @@
     function like(imagebox_id, image_name) {
         if ($("#" + imagebox_id.toString() + "-main").attr("like") == "yes") {
             mdui.snackbar({
-                message: '点赞太快啦~',
+                message: 'Upvote too fast~',
                 position: 'right-top'
             });
             return false

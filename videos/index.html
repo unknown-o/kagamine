@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <title>VideoPlayer - Kagaminefans</title>
-    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
-    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <meta name="keywords" content="Kagamine Len,Kagamine Rin,Kagamine,Rin,Len">
+    <meta name="description" content="This site is developed for Kagamine Len & Rin">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,7 +29,7 @@
             </h1>
             <div class="doc-chapter">
                 <div class="mdui-typo">
-                    <p>在下方选择你要观看的演唱会</p>
+                    <p>Choose the concert you want to watch</p>
                 </div>
             </div>
         </div>
@@ -42,21 +42,21 @@
             </div>
             <div class="mdui-card-content">
                 <div style="padding: 0.3rem;">
-                    选择演唱会：<br>
+                    Choose a concert：<br>
                     <select id="video-url" class="mdui-select">
                     </select>
                 </div>
                 <div style="padding: 0.3rem;">
                     <div class="mdui-row">
                         <div class="mdui-col-xs-5">
-                            选择播放节点：<br>
+                            Select CDN：<br>
                             <select id="play-node" class="mdui-select">
                             </select>
                         </div>
                         <div class="mdui-col-xs-7">
                             <br>
                             <a onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP" callback="play"
-                                class="mdui-float-right mdui-btn mdui-ripple">开始播放</a>
+                                class="mdui-float-right mdui-btn mdui-ripple">PLAY</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                 error: function (ex) {
                     $("#is-loading").hide(200)
                     mdui.snackbar({
-                        message: "抱歉，请求失败",
+                        message: "SORRY, REQUEST FAILED",
                         position: 'right-top',
                     });
                 }
