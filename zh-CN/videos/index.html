@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <title>VideoPlayer - Kagaminefans</title>
+    <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
+    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
+    <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
+    <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
+</head>
+
+<body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
+    <div style="display: none;" id="is-loading" class="mdui-progress">
+        <div class="mdui-progress-indeterminate"></div>
+    </div>
+    <div id="page-index" class="mdui-container" style="max-width: 800px;">
+        <div style="padding: 1rem;">
+            <h1 class="mdui-text-color-theme">
+                <a class="mdui-float-right mdui-btn mdui-btn-icon mdui-text-color-theme" href="/">
+                    <i class="mdui-icon material-icons">arrow_back</i>
+                </a>
+                VideoPlayer
+            </h1>
+            <div class="doc-chapter">
+                <div class="mdui-typo">
+                    <p>在下方选择你要观看的演唱会</p>
+                </div>
+            </div>
+        </div>
+        <div class="mdui-card mdui-center mdui-hoverable" style="border-radius: 16px;">
+            <div class="mdui-card-media">
+                <video id="video-player" autoplay preload controls width="100%" height="100%"
+                    poster="https://img-1.llilii.cn/compression/vocaloid/kagamine/63932635_p0.jpg">
+                    <source src="" type="video/mp4">
+                </video>
+            </div>
+            <div class="mdui-card-content">
+                <div style="padding: 0.3rem;">
+                    选择演唱会：<br>
+                    <select id="video-url" class="mdui-select">
+                    </select>
+                </div>
+                <div style="padding: 0.3rem;">
+                    <div class="mdui-row">
+                        <div class="mdui-col-xs-5">
+                            选择播放节点：<br>
+                            <select id="play-node" class="mdui-select">
+                            </select>
+                        </div>
+                        <div class="mdui-col-xs-7">
+                            <br>
+                            <a onclick="u_captcha.captcha(this)" appid="9sg0iTF1hjh1FpHP" callback="play"
+                                class="mdui-float-right mdui-btn mdui-ripple">开始播放</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var player = {
+        default_variable: function () {
+            this.video_info = "https://static-1.llilii.cn/json/kagamine_videos.json"
+        },
+        setup: function () {
+            this.default_variable()
+            this.request_api(this.video_info, "", function (rdata) {
+                rdata.video_info.forEach(element => {
+                    $("#video-url").append("<option value='" + element.url + "''>" + element.name + "</option>")
+                });
+                rdata.play_node.forEach(element => {
+                    $("#play-node").append("<option value='" + element.base_url + "''>" + element.name + "</option>")
+                });
+                new mdui.Select("#play-node", { position: 'top' })
+                new mdui.Select("#video-url", { position: 'top' });
+            }, "get", true)
+        },
+        request_api: function (path, args, callback, method, show_result) {
+            $("#is-loading").show(200)
+            $.ajax({
+                method: method,
+                url: path,
+                data: args,
+                timeout: 36000,
+                async: true,
+                dataType: "json",
+                success: function (rdata) {
+                    $("#is-loading").hide(200)
+                    if (show_result && rdata.msg != undefined) {
+                        mdui.snackbar({
+                            message: rdata.msg,
+                            position: 'right-top',
+                        });
+                    }
+                    if (callback) {
+                        callback(rdata)
+                    }
+                },
+                error: function (ex) {
+                    $("#is-loading").hide(200)
+                    mdui.snackbar({
+                        message: "抱歉，请求失败",
+                        position: 'right-top',
+                    });
+                }
+            });
+        },
+    }
+    window.play = function (key, timestamp, b_this) {
+        video_url = $("#play-node").val() + $("#video-url").val() + "?key=" + key + "&timestamp=" + timestamp
+        $("#video-player").attr("src", video_url)
+    }
+
+    player.setup()
+</script>
