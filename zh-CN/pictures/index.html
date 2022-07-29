@@ -155,15 +155,25 @@
     } else {
         request_api("likes", 'get', {}, function (rdata) {
             window.likes = rdata.data
-            $.get(imgListURL, function (rdata) {
-                window.imgList = rdata
-                loadMore()
-                if (autoLoadImages) {
-                    setInterval(function () {
-                        if (loadingCount == 0) {
-                            autoLoadImage()
-                        }
-                    }, 6000);
+            $.ajax({
+                type: "get",
+                url: imgListURL,
+                success: function (rdata) {
+                    window.imgList = rdata
+                    loadMore()
+                    if (autoLoadImages) {
+                        setInterval(function () {
+                            if (loadingCount == 0) {
+                                autoLoadImage()
+                            }
+                        }, 6000);
+                    }
+                },
+                error: function (rdata) {
+                    mdui.snackbar({
+                        message: '加载图片列表失败！请刷新重试！',
+                        position: 'right-top'
+                    });
                 }
             })
         }, true, false, false)

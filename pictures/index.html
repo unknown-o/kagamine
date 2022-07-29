@@ -155,15 +155,25 @@
     } else {
         request_api("likes", 'get', {}, function (rdata) {
             window.likes = rdata.data
-            $.get(imgListURL, function (rdata) {
-                window.imgList = rdata
-                loadMore()
-                if (autoLoadImages) {
-                    setInterval(function () {
-                        if (loadingCount == 0) {
-                            autoLoadImage()
-                        }
-                    }, 6000);
+            $.ajax({
+                type: "get",
+                url: imgListURL,
+                success: function (rdata) {
+                    window.imgList = rdata
+                    loadMore()
+                    if (autoLoadImages) {
+                        setInterval(function () {
+                            if (loadingCount == 0) {
+                                autoLoadImage()
+                            }
+                        }, 6000);
+                    }
+                },
+                error: function (rdata) {
+                    mdui.snackbar({
+                        message: 'Failed to load image list, please refresh and try again!',
+                        position: 'right-top'
+                    });
                 }
             })
         }, true, false, false)
