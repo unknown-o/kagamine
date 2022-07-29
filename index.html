@@ -18,6 +18,9 @@
     <div style="display: none;" id="is-loading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
+    <audio id="music" onended="music.switch()" src="">
+        Sorry... your browser does not support the audio tag yet!
+    </audio>
     <div class="mdui-container" id="pjax-container" style="max-width: 800px;">
         <div style="padding: 1rem;">
             <h1 class="doc-title mdui-text-color-theme">
@@ -111,6 +114,10 @@
         <br><br>
         <button mdui-dialog="{target: '#settings-main'}" class="mdui-fab mdui-color-theme-accent">
             <i class="mdui-icon material-icons">code</i>
+        </button>
+        <br><br>
+        <button onclick="music.play()" ondblclick="music.switch();music.play()" class="mdui-fab mdui-color-theme-accent">
+            <i class="mdui-icon material-icons">music_note</i>
         </button>
     </div>
     <div class="mdui-dialog" id="settings-main">

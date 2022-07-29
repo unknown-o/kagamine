@@ -19,6 +19,9 @@
     <div style="display: none;" id="isLoading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
+    <audio id="music" onended="music.switch()" src="">
+        Sorry... your browser does not support the audio tag yet!
+    </audio>
     <div id="page-index" class="mdui-container" style="max-width: 800px;">
         <div style="padding: 1rem;">
             <h1 class="doc-title mdui-text-color-theme">
@@ -38,8 +41,8 @@
             <div class="mdui-col" id="imageBoxCol-1"></div>
         </div><br>
         <center>
-            <button onclick="loadMore()"
-                class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">LOAD MORE</button>
+            <button onclick="loadMore()" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent">LOAD
+                MORE</button>
         </center>
     </div>
     <div style="display: none;">
@@ -78,21 +81,26 @@
         <button mdui-dialog="{target: '#settings-main'}" class="mdui-fab mdui-color-theme-accent">
             <i class="mdui-icon material-icons">settings</i>
         </button>
+        <br><br>
+        <button onclick="music.play()" ondblclick="music.switch();music.play()"
+            class="mdui-fab mdui-color-theme-accent">
+            <i class="mdui-icon material-icons">music_note</i>
+        </button>
     </div>
     <div class="mdui-dialog" id="settings-main">
         <div class="mdui-dialog-title">Display Settings</div>
         <div class="mdui-dialog-content">
-            Show Direct: 
+            Show Direct:
             <label class="mdui-switch">
                 <input id="showImageDirect" type="checkbox" />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br>Show Loading Bar: 
+            <br>Show Loading Bar:
             <label class="mdui-switch">
                 <input id="showLoadingStatus" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br>Auto Load Images: 
+            <br>Auto Load Images:
             <label class="mdui-switch">
                 <input id="autoLoadImages" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>

@@ -20,6 +20,9 @@
     <div style="display: none;" id="is-loading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
+    <audio id="music" onended="music.switch()" src="">
+        抱歉...您的浏览器暂不支持audio标签哦！
+    </audio>
     <div class="mdui-container" id="pjax-container" style="max-width: 800px;">
         <div style="padding: 1rem;">
             <h1 class="doc-title mdui-text-color-theme">
@@ -122,6 +125,12 @@
             </div>
             <br>
         </div>
+    </div>
+    <div class="mdui-fab-fixed" style="z-index: 1">
+        <button onclick="music.play()" ondblclick="music.switch();music.play()"
+            class="mdui-fab mdui-color-theme-accent">
+            <i class="mdui-icon material-icons">music_note</i>
+        </button>
     </div>
     <script>
         window.show_unaudited = false

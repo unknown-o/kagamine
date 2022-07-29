@@ -19,6 +19,9 @@
     <div style="display: none;" id="isLoading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
+    <audio id="music" onended="music.switch()" src="">
+        抱歉...您的浏览器暂不支持audio标签哦！
+    </audio>
     <div id="page-index" class="mdui-container" style="max-width: 800px;">
         <div style="padding: 1rem;">
             <h1 class="doc-title mdui-text-color-theme">
@@ -77,6 +80,11 @@
         <br><br>
         <button mdui-dialog="{target: '#settings-main'}" class="mdui-fab mdui-color-theme-accent">
             <i class="mdui-icon material-icons">settings</i>
+        </button>
+        <br><br>
+        <button onclick="music.play()" ondblclick="music.switch();music.play()"
+            class="mdui-fab mdui-color-theme-accent">
+            <i class="mdui-icon material-icons">music_note</i>
         </button>
     </div>
     <div class="mdui-dialog" id="settings-main">

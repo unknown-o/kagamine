@@ -9,6 +9,7 @@
     <meta name="description" content="镜面双生，最美和音！">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <link rel="stylesheet" href="https://static-1.llilii.cn/css/mdx-icons.css" />
+    <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
@@ -18,6 +19,9 @@
     <div style="display: none;" id="is-loading" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
+    <audio id="music" onended="music.switch()" src="">
+        抱歉...您的浏览器暂不支持audio标签哦！
+    </audio>
     <div class="mdui-container" id="pjax-container" style="max-width: 800px;">
         <div style="padding: 1rem;">
             <h1 class="doc-title mdui-text-color-theme">
@@ -108,9 +112,12 @@
     </div>
 
     <div class="mdui-fab-fixed" style="z-index: 1">
-        <br><br>
         <button mdui-dialog="{target: '#settings-main'}" class="mdui-fab mdui-color-theme-accent">
             <i class="mdui-icon material-icons">code</i>
+        </button>
+        <br><br>
+        <button onclick="music.play()" ondblclick="music.switch();music.play()" class="mdui-fab mdui-color-theme-accent">
+            <i class="mdui-icon material-icons">music_note</i>
         </button>
     </div>
     <div class="mdui-dialog" id="settings-main">
