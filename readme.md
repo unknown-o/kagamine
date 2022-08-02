@@ -26,5 +26,5 @@ eMail：i#mr-wu.top（# -> @）
 
 
 
-**This project does not specify an open source license. No one is allowed to modify the code and republish it. **
+**This project does not specify an open source license. No one is allowed to modify the code and republish it.**
 
