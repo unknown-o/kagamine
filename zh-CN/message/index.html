@@ -252,6 +252,7 @@
                         })
                     }
                     $("#is-loading").hide(100)
+                    $("body").parent().css("overflow-y","auto");
                     $(disable_btn).attr("disabled", false)
                     if (callback) {
                         callback(rdata)
