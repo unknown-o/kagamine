@@ -8,11 +8,13 @@
     <meta name="keywords" content="Kagamine Len,Kagamine Rin,Kagamine,Rin,Len">
     <meta name="description" content="This site is developed for Kagamine Len & Rin">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <link rel="stylesheet" href="https://static.junity.cc/css/viewer.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
+    <script src="https://static.junity.cc/js/viewer.min.js"></script>
     <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225"
         src="https://analysis.llilii.cn/umami.js"></script>
 </head>
@@ -432,7 +434,10 @@
 
         imageElement.attr("src", imgURL);
         imageElement[0].onclick = function () {
-            window.open(base_url_origin + "/" + image_name)
+            let image = new Image();
+            image.src = base_url_origin + '/' + image_name;
+            let viewer = new Viewer(image)
+            viewer.show()
         }
 
         if (imageBoxCol0[0].clientHeight < imageBoxCol1[0].clientHeight)
