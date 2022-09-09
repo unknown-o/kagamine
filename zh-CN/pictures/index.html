@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <title>PictureViewer - Kagaminefans</title>
     <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
-    <meta name="description" content="如果天使有声音，那么一定是镜音的天籁！">
+    <meta name="description" content="如果天使有声音, 那么一定是镜音的天籁！">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
-    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225" src="https://analysis.llilii.cn/umami.js"></script>
+    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225"
+        src="https://analysis.llilii.cn/umami.js"></script>
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
@@ -33,7 +34,7 @@
             </h1>
             <div class="doc-chapter">
                 <div class="mdui-typo">
-                    <p>如果天使有声音，那么一定是镜音的天籁！</p>
+                    <p>如果天使有声音, 那么一定是镜音的天籁！</p>
                 </div>
             </div><br>
         </div>
@@ -91,17 +92,17 @@
     <div class="mdui-dialog" id="settings-main">
         <div class="mdui-dialog-title">显示设置</div>
         <div class="mdui-dialog-content">
-            直接显示图片：
+            直接显示图片:
             <label class="mdui-switch">
                 <input id="showImageDirect" type="checkbox" />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br> 显示加载进度条：
+            <br> 显示加载进度条:
             <label class="mdui-switch">
                 <input id="showLoadingStatus" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>
             </label>
-            <br> 自动加载图片补位：
+            <br> 自动加载图片补位:
             <label class="mdui-switch">
                 <input id="autoLoadImages" type="checkbox" checked />
                 <i class="mdui-switch-icon"></i>
@@ -228,7 +229,7 @@
                 $(disableBtnId).attr("disabled", false)
                 callback({})
                 mdui.snackbar({
-                    message: "请求接口[" + apiPath + "]时，出现了一个致命错误！",
+                    message: "请求接口[" + apiPath + "]时, 出现了一个致命错误！",
                     position: 'right-top'
                 })
             },
@@ -285,7 +286,7 @@
 
     $("#autoLoadImages").click(function () {
         mdui.snackbar({
-            message: "保存成功，请刷新页面以立即生效配置！",
+            message: "保存成功, 请刷新页面以立即生效配置！",
             position: 'right-top'
         })
         setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
@@ -374,7 +375,7 @@
                         callback(imgBoxId, imgURL)
                     } else {
                         mdui.snackbar({
-                            message: '抱歉，图片加载失败！',
+                            message: '抱歉, 图片加载失败！',
                             position: 'right-top'
                         });
                     }

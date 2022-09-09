@@ -4,9 +4,9 @@ This site is developed for Kagamine Len & Rin
 
 ## Project official address
 
-Github：https://github.com/unknown-o/kagamine
+Github: https://github.com/unknown-o/kagamine
 
-Website：https://kagamine.top
+Website: https://kagamine.top
 
 ## How to contribute to this project
 
@@ -22,9 +22,6 @@ Recordings from official concerts
 
 ## Author contact information
 
-eMail：i#mr-wu.top（# -> @）
-
-
+eMail: i#mr-wu.top（# -> @）
 
 **This project does not specify an open source license. No one is allowed to modify the code and republish it.**
-
