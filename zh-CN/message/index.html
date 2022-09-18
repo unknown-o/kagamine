@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <title>Kagaminefans</title>
     <meta name="keywords" content="镜音双子,镜音连,镜音连,Kagamine,Rin,Len">
-    <meta name="description" content="镜面双生，最美和音！">
+    <meta name="description" content="镜面双生, 最美和音！">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
@@ -14,7 +14,8 @@
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
     <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
     <script src="https://static-1.llilii.cn/libs/captcha/v1/captcha.js"></script>
-    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225" src="https://analysis.llilii.cn/umami.js"></script>
+    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225"
+        src="https://analysis.llilii.cn/umami.js"></script>
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
@@ -43,7 +44,7 @@
                 <div class="mdui-card" style="border-radius: 8px;">
                     <div class="mdui-card-primary">
                         <div class="mdui-card-primary-title">提交留言</div>
-                        <div class="mdui-card-primary-subtitle">你想对双子说什么？</div>
+                        <div class="mdui-card-primary-subtitle">你想对双子说什么?</div>
                     </div>
                     <div class="mdui-card-content">
                         <div class="mdui-textfield">
@@ -72,17 +73,17 @@
                 <div id="c-CARD_ID" class="mdui-card" style="border-radius: 8px;">
                     <div class="mdui-card-primary">
                         <div class="mdui-card-primary-title">排序方式</div>
-                        <div class="mdui-card-primary-subtitle">你想按照什么排序留言？</div>
+                        <div class="mdui-card-primary-subtitle">你想按照什么排序留言?</div>
                     </div>
                     <div class="mdui-card-content">
-                        显示未经审核的留言：
+                        显示未经审核的留言:
                         <label class="mdui-switch">
                             <input id="autoLoadImages"
                                 onchange="window.show_unaudited=!window.show_unaudited;get_messages($('#sort').val(), 50,window.show_unaudited)"
                                 type="checkbox" />
                             <i class="mdui-switch-icon"></i>
                         </label><br>
-                        留言的排序方式：<select id="sort" class="mdui-select"
+                        留言的排序方式: <select id="sort" class="mdui-select"
                             onchange="get_messages($(this).val(), 50,window.show_unaudited)"
                             mdui-select="{position: 'top'}">
                             <option value="likes">点赞量</option>
@@ -253,7 +254,7 @@
                         })
                     }
                     $("#is-loading").hide(100)
-                    $("body").parent().css("overflow-y","auto");
+                    $("body").parent().css("overflow-y", "auto");
                     $(disable_btn).attr("disabled", false)
                     if (callback) {
                         callback(rdata)
@@ -277,7 +278,7 @@
                     catch (error) {
                         console.log(error)
                         mdui.snackbar({
-                            message: "请求接口[" + path + "]时，出现了一个致命错误！",
+                            message: "请求接口[" + path + "]时, 出现了一个致命错误！",
                             position: 'right-top'
                         })
                     }

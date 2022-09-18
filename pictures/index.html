@@ -8,16 +8,19 @@
     <meta name="keywords" content="Kagamine Len,Kagamine Rin,Kagamine,Rin,Len">
     <meta name="description" content="This site is developed for Kagamine Len & Rin">
     <link rel="stylesheet" href="https://static-1.llilii.cn/libs/mdui/css/mdui.min.css" />
+    <link rel="stylesheet" href="https://static.junity.cc/css/viewer.min.css" />
     <script src="https://static-1.llilii.cn/libs/mdui/js/mdui.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://static-1.llilii.cn/libs/md5/jquery.md5.js"></script>
     <script src="https://static-1.llilii.cn/js/console-image-kagamine.js"></script>
     <script src="https://static-1.llilii.cn/js/kagamine.js"></script>
-    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225" src="https://analysis.llilii.cn/umami.js"></script>
+    <script src="https://static.junity.cc/js/viewer.min.js"></script>
+    <script async defer data-website-id="a1f454da-8122-4c78-9125-33823e28f225"
+        src="https://analysis.llilii.cn/umami.js"></script>
 </head>
 
 <body class="mdui-bottom-nav-fixed mdui-theme-primary-yellow mdui-theme-accent-pink mdui-theme-layout-auto mdui-loaded">
-    <div style="display: none;" id="isLoading" class="mdui-progress">
+    <div style="display: none;" id="loading-status" class="mdui-progress">
         <div class="mdui-progress-indeterminate"></div>
     </div>
     <audio id="music" onended="music.switch()" src="">
@@ -48,25 +51,24 @@
     </div>
     <div style="display: none;">
         <div id="imageBoxTemplate">
-            <div id="imgBoxId-main" style="display: none;" class="mdui-card mdui-hoverable">
+            <div class="mdui-card mdui-hoverable card-main">
                 <div class="mdui-card-media">
-                    <img onclick="window.open($(this).attr('origin-src'))" id='imgBoxId-imageSrc' src="" />
+                    <img src="" />
                     <div class="mdui-card-menu">
-                        <button onclick="like('imgBoxId','image-name')"
-                            class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red">
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple mdui-text-color-red card-like-button">
                             <i class="mdui-icon material-icons">favorite</i>
                         </button> &nbsp;
                         <div class="mdui-float-right mdui-card-primary-subtitle">
-                            <div id="imgBoxId-likes">0</div>
+                            <div class="card-likes">0</div>
                         </div>
                     </div>
                 </div>
-                <div id='imgBoxId-loadingBox'>
-                    <div id='imgBoxId-loadingBoxHeight' class="mdui-card-content">
+                <div class="card-loading-box">
+                    <div class="mdui-card-content card-loading-box-height">
                         <h2>LOADING</h2>
                         <br>
                         <div class="mdui-progress">
-                            <div id='imgBoxId-loadingStatus' class="mdui-progress-determinate" style="width: 0%;"></div>
+                            <div class="mdui-progress-determinate card-loading-status" style="width: 0%;"></div>
                         </div>
                     </div>
                 </div>
@@ -131,6 +133,11 @@
     </div>
 </body>
 <script>
+    let loadedImages = [];
+    let imageBoxCol0 = $("#imageBoxCol-0");
+    let imageBoxCol1 = $("#imageBoxCol-1");
+    let globalLoadingStatus = $("#loading-status")
+
     $(window).on('scroll', function () {
         var scrolled = $(window).scrollTop();
         if (scrolled > 100) {
@@ -138,20 +145,28 @@
         } else {
             $("#back-to-top").addClass("mdui-fab-hide")
         }
+
+        if (document.documentElement.scrollHeight - document.documentElement.scrollTop < 1200) {
+            if (window.autoLoadImages) {
+                loadMore()
+            }
+        }
     });
 
     window.loadingCount = 0
+
     if (getCookie("showLoadingStatus") == "" || getCookie("imgBaseURL") != "") {
         setDefaultSettings()
     } else {
         window.showLoadingStatus = (getCookie("showLoadingStatus") == "true")
         window.showImageDirect = (getCookie("showImageDirect") == "true")
         window.autoLoadImages = (getCookie("autoLoadImages") == "true")
+        window.imgListURL = getCookie("imgListURL")
+
         $("#showLoadingStatus").attr("checked", showLoadingStatus)
         $("#autoLoadImages").attr("checked", autoLoadImages)
         $("#showImageDirect").attr("checked", showImageDirect)
         $("#showLoadingStatus").attr("disabled", showImageDirect)
-        window.imgListURL = getCookie("imgListURL")
         $("#imgListURL").val(getCookie("imgListURL"))
     }
     window.loadImageNumber = 10
@@ -162,7 +177,7 @@
             position: 'right-top'
         });
     } else {
-        request_api("likes", 'get', {}, function (rdata) {
+        requestApi("likes", 'get', {}, function (rdata) {
             window.likes = rdata.data
             $.ajax({
                 type: "get",
@@ -170,13 +185,6 @@
                 success: function (rdata) {
                     window.imgList = rdata
                     loadMore()
-                    if (autoLoadImages) {
-                        setInterval(function () {
-                            if (loadingCount == 0) {
-                                autoLoadImage()
-                            }
-                        }, 6000);
-                    }
                 },
                 error: function (rdata) {
                     mdui.snackbar({
@@ -188,7 +196,7 @@
         }, true, false, false)
     }
 
-    function request_api(apiPath, method, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
+    function requestApi(apiPath, method, args, callback, showResults, refreshPageWhenSuccess, disableBtnId) {
         var timestamp = Date.parse(new Date()) / 1000
         var key = $.md5('Kagamine Yes!' + timestamp.toString())
         var auth = btoa(timestamp.toString() + '__' + key)
@@ -196,7 +204,7 @@
         setTimeout(function () {
             $(disableBtnId).attr("disabled", false);
         }, 200000)
-        $("#isLoading").show(100)
+        globalLoadingStatus.show(100)
         $.ajax({
             type: method,
             headers: {
@@ -217,14 +225,14 @@
                         container: "#pjax-container"
                     })
                 }
-                $("#isLoading").hide(100)
+                globalLoadingStatus.hide(100)
                 $(disableBtnId).attr("disabled", false)
                 if (callback) {
                     callback(rdata)
                 }
             },
             error: function (data) {
-                $("#isLoading").hide(100)
+                globalLoadingStatus.hide(100)
                 $(disableBtnId).attr("disabled", false)
                 callback({})
                 mdui.snackbar({
@@ -241,16 +249,16 @@
         window.autoLoadImages = true
         window.imgListURL = "https://img-1.llilii.cn/imglist/kagamine.json"
         $("#imgListURL").val(imgListURL)
-        setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
-        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
-        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
-        setCookie("imgListURL", imgListURL, 30)
+        setCookie("showImageDirect", $("#showImageDirect").prop("checked"))
+        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"))
+        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"))
+        setCookie("imgListURL", imgListURL)
         setCookie("imgBaseURL", "", 1)
     }
 
     function saveAdvancedSettings() {
         window.imgListURL = $("#imgListURL").val()
-        setCookie("imgListURL", imgListURL, 30)
+        setCookie("imgListURL", imgListURL)
         $.get(imgListURL, function (rdata) {
             window.imgList = rdata
         });
@@ -261,56 +269,42 @@
     }
 
     function loadMore() {
-        loadingCount += loadImageNumber - 1
         for (i = 0; i < loadImageNumber - 1; i++) {
-            imgBoxCreate(i % 2)
+            createImageBox()
         }
+
         if (showImageDirect) {
-            autoLoadImage()
+            createImageBox()
         } else {
             setTimeout(function () {
-                autoLoadImage()
+                createImageBox()
             }, 6000);
         }
     }
 
-    function autoLoadImage() {
-        loadingCount += 1
-        if ($("#imageBoxCol-0").height() - $("#imageBoxCol-1").height() > 0) {
-            imgBoxCreate(1)
-        } else {
-            imgBoxCreate(0)
-        }
+    function initSetting(name, message, callback) {
+        callback = callback || null
+        element = $('#' + name)
+
+        element.click(function () {
+            mdui.snackbar({
+                message: message,
+                position: 'right-top'
+            })
+            let value = element.prop("checked");
+            setCookie(name, value);
+            window[name] = value;
+
+            if (callback)
+                callback()
+        })
     }
 
-    $("#autoLoadImages").click(function () {
-        mdui.snackbar({
-            message: "Saved! Please refresh the page!",
-            position: 'right-top'
-        })
-        setCookie("autoLoadImages", $("#autoLoadImages").prop("checked"), 30)
-        autoLoadImages = $("#autoLoadImages").prop("checked")
-    })
-
-    $("#showLoadingStatus").click(function () {
-        mdui.snackbar({
-            message: "Saved！",
-            position: 'right-top'
-        })
-        setCookie("showLoadingStatus", $("#showLoadingStatus").prop("checked"), 30)
-        showLoadingStatus = $("#showLoadingStatus").prop("checked")
-    })
-
-    $("#showImageDirect").click(function () {
-        mdui.snackbar({
-            message: "Saved！",
-            position: 'right-top'
-        })
-        setCookie("showImageDirect", $("#showImageDirect").prop("checked"), 30)
-        showImageDirect = $("#showImageDirect").prop("checked")
+    initSetting("autoLoadImages", "Saved! Please refresh the page!")
+    initSetting("showLoadingStatus", "Saved!")
+    initSetting("showImageDirect", "Saved!", function () {
         $("#showLoadingStatus").attr("disabled", showImageDirect)
     })
-
 
     function randomNumBoth(min, max) {
         var range = max - min;
@@ -338,6 +332,7 @@
     }
 
     function setCookie(cname, cvalue, exdays) {
+        exdays = exdays || 30
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toGMTString();
@@ -354,13 +349,20 @@
         return "";
     }
 
-    function loadImage(imgURL, imgBoxId, callback) {
+    function choseImage() {
+        do {
+            res = randomNumBoth(0, parseInt(imgList['info']['count']) - 1);
+        } while (loadedImages.findIndex((x) => { return x == res }) != -1)
+        return res;
+    }
+
+    function loadImage(imgURL, loadingStatusElement, callback) {
         loadingStatus()
         var xhr = new XMLHttpRequest();
         xhr.open('GET', imgURL);
         xhr.onprogress = function (event) {
             if (event.lengthComputable) {
-                $("#" + imgBoxId.toString() + "-loadingStatus").css("width", parseInt((event.loaded / event.total) * 100).toString() + "%")
+                loadingStatusElement.css("width", parseInt((event.loaded / event.total) * 100).toString() + "%")
             }
         };
         xhr.onreadystatechange = function () {
@@ -374,7 +376,7 @@
                         callback(imgBoxId, imgURL)
                     } else {
                         mdui.snackbar({
-                            message: 'Sorry，Failed to load image！',
+                            message: 'Sorry,Failed to load image!',
                             position: 'right-top'
                         });
                     }
@@ -385,67 +387,96 @@
 
     function loadingStatus() {
         if (loadingCount > 0) {
-            $("#isLoading").show(200)
+            globalLoadingStatus.show(200)
         } else {
-            $("#isLoading").hide(200)
+            globalLoadingStatus.hide(200)
         }
     }
 
-    function like(imagebox_id, image_name) {
-        if ($("#" + imagebox_id.toString() + "-main").attr("like") == "yes") {
+    function like(boxElement, image_name) {
+        let likesElement = boxElement.find(".card-likes")
+        if (boxElement.attr("like") == "yes") {
             mdui.snackbar({
                 message: 'Upvote too fast~',
                 position: 'right-top'
             });
             return false
         }
-        request_api("likes/" + image_name.split('.')[0].split('_')[0] + '/' + image_name.split('.')[0].split('_')[1].split('p')[1]
+        requestApi("likes/" + image_name.split('.')[0].split('_')[0] + '/' + image_name.split('.')[0].split('_')[1].split('p')[1]
             , 'post', {}, function (rdata) {
-                $("#" + imagebox_id.toString() + "-likes").text(rdata.data.likes)
-                $("#" + imagebox_id.toString() + "-main").attr("like", "yes")
+                likesElement.text(rdata.data.likes)
+                boxElement.attr("like", "yes")
             }, true, false, false
         )
     }
 
-    function imgBoxCreate(colId) {
+    function createImageBox() {
         imgBoxId = randomNumBoth(100000, 99999999)
-        imageBoxTemplate = $("#imageBoxTemplate").html()
-        image_id = randomNumBoth(0, parseInt(imgList['info']['count']) - 1)
+        let imageBoxTemplate = $("#imageBoxTemplate")
+
+        image_id = choseImage()
+
         base_url_origin = imgList['base_url']['origin']['private'][randomNumBoth(0, parseInt(imgList['base_url']['compression']['private'].length) - 1)]
         base_url_compression = imgList['base_url']['compression']['private'][randomNumBoth(0, parseInt(imgList['base_url']['compression']['private'].length) - 1)]
+
         image_name = imgList['filename'][image_id]
         imgURL = base_url_compression + "/" + image_name
-        imageBoxTemplate = imageBoxTemplate.replace(/imgBoxId/g, imgBoxId).replace(/image-name/g, image_name)
-        $("#imageBoxCol-" + colId.toString()).append(imageBoxTemplate)
-        $("#" + imgBoxId.toString() + "-imageSrc").attr("src", imgURL);
-        $("#" + imgBoxId.toString() + "-imageSrc").attr("origin-src", base_url_origin + "/" + image_name);
+
+        let cardElement = imageBoxTemplate.clone()
+        let imageElement = cardElement.find("img")
+        let loadingBoxElement = cardElement.find(".card-loading-box")
+        let likesElement = cardElement.find(".card-likes")
+        let likeButtonElement = cardElement.find(".card-like-button")
+
+        likeButtonElement[0].onclick = function () {
+            like(cardElement, image_name)
+        }
+
+        imageElement.attr("src", imgURL);
+        imageElement[0].onclick = function () {
+            let image = new Image();
+            image.src = base_url_origin + '/' + image_name;
+            let viewer = new Viewer(image)
+            viewer.show()
+        }
+
+        if (imageBoxCol0[0].clientHeight < imageBoxCol1[0].clientHeight)
+            imageBoxCol0.append(cardElement)
+        else
+            imageBoxCol1.append(cardElement)
+
+        //获取点赞数
         try {
             if (likes[image_name.split('.')[0]] != undefined) {
-                $("#" + imgBoxId.toString() + "-likes").text(likes[image_name.split('.')[0]]);
+                likesElement.text(likes[image_name.split('.')[0]]);
             }
         } catch (error) {
             console.log("Failed to get likes!")
         }
-        $("#" + imgBoxId.toString() + "-imageSrc").hide()
+
+        imageElement.hide()
+
         if (isMobile()) {
-            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(100, 200).toString() + "px")
+            loadingBoxElement.css("height", randomNumBoth(100, 200).toString() + "px")
         } else {
-            $("#" + imgBoxId.toString() + "-loadingBox").css("height", randomNumBoth(400, 600).toString() + "px")
+            loadingBoxElement.css("height", randomNumBoth(400, 600).toString() + "px")
         }
+
         if (showImageDirect) {
-            $("#" + imgBoxId.toString() + "-imageSrc").show()
-            $("#" + imgBoxId.toString() + "-loadingBox").hide()
-            $("#" + imgBoxId.toString() + "-main").show(200)
+            imageElement.show()
+            loadingBoxElement.hide()
+            cardElement.show(200)
         } else {
             if (showLoadingStatus) {
-                $("#" + imgBoxId.toString() + "-main").show(200)
+                cardElement.show(200)
+                loadingBoxElement.show(200)
             }
-            loadImage(imgURL, imgBoxId, function (imgBoxId, imgURL) {
+            loadImage(imgURL, cardElement.find(".card-loading-status"), function (imgBoxId, imgURL) {
                 if (!showLoadingStatus) {
-                    $("#" + imgBoxId.toString() + "-main").show(200)
+                    cardElement.show(200)
                 }
-                $("#" + imgBoxId.toString() + "-imageSrc").show()
-                $("#" + imgBoxId.toString() + "-loadingBox").hide()
+                imageElement.show()
+                loadingBoxElement.hide()
             })
         }
     }
