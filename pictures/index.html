@@ -393,19 +393,19 @@
         }
     }
 
-    function like(boxElement, image_name) {
+    function like(that, boxElement) {
         let likesElement = boxElement.find(".card-likes")
-        if (boxElement.attr("like") == "yes") {
+        let imageName = that.currentTarget.dataset.imageName
+        if (that.currentTarget.dataset.like == "yes") {
             mdui.snackbar({
                 message: 'Upvote too fast~',
                 position: 'right-top'
             });
             return false
         }
-        requestApi("likes/" + image_name.split('.')[0].split('_')[0] + '/' + image_name.split('.')[0].split('_')[1].split('p')[1]
-            , 'post', {}, function (rdata) {
+        requestApi("likes/" + imageName.split('.')[0].split('_')[0] + '/' + imageName.split('.')[0].split('_')[1].split('p')[1]
+            , 'post', {}, function (rdata, that) {
                 likesElement.text(rdata.data.likes)
-                boxElement.attr("like", "yes")
             }, true, false, false
         )
     }
@@ -428,14 +428,19 @@
         let likesElement = cardElement.find(".card-likes")
         let likeButtonElement = cardElement.find(".card-like-button")
 
-        likeButtonElement[0].onclick = function () {
-            like(cardElement, image_name)
+        imageElement.attr("src", imgURL);
+        imageElement.attr("data-origin-path", base_url_origin);
+        imageElement.attr("data-image-name", image_name);
+        likeButtonElement.attr("data-image-name", image_name);
+
+        likeButtonElement[0].onclick = function (that) {
+            like(that, cardElement)
         }
 
-        imageElement.attr("src", imgURL);
-        imageElement[0].onclick = function () {
+
+        imageElement[0].onclick = function (that) {
             let image = new Image();
-            image.src = base_url_origin + '/' + image_name;
+            image.src = that.currentTarget.dataset.originPath + "/" + that.currentTarget.dataset.imageName;
             let viewer = new Viewer(image)
             viewer.show()
         }
