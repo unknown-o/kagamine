@@ -154,6 +154,7 @@
     });
 
     window.loadingCount = 0
+    window.likeList = []
 
     if (getCookie("showLoadingStatus") == "" || getCookie("imgBaseURL") != "") {
         setDefaultSettings()
@@ -396,7 +397,7 @@
     function like(that, boxElement) {
         let likesElement = boxElement.find(".card-likes")
         let imageName = that.currentTarget.dataset.imageName
-        if (that.currentTarget.dataset.like == "yes") {
+        if (window.likeList.indexOf(imageName) != -1) {
             mdui.snackbar({
                 message: 'Upvote too fast~',
                 position: 'right-top'
@@ -406,6 +407,7 @@
         requestApi("likes/" + imageName.split('.')[0].split('_')[0] + '/' + imageName.split('.')[0].split('_')[1].split('p')[1]
             , 'post', {}, function (rdata, that) {
                 likesElement.text(rdata.data.likes)
+                window.likeList.push(imageName)
             }, true, false, false
         )
     }
