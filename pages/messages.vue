@@ -110,11 +110,23 @@
       </v-col>
     </v-row>
   </v-container>
+  <UCaptcha ref="captchaRef"></UCaptcha>
+  <VuetifySnackbar ref="snackbarRef"></VuetifySnackbar>
 </template>
 
 <script lang="ts" setup>
 import { requestApi, formatDate } from "../plugins/common";
 import { ref, reactive, watch } from "vue";
+import UCaptcha from "../components/UCaptcha.vue";
+import VuetifySnackbar from "../components/VuetifySnackbar.vue";
+let captchaRef = ref();
+let snackbarRef = ref();
+const getCaptcha = function (callback: any) {
+  captchaRef.value?.getCaptcha(callback);
+};
+const snackbar = function (text = "this is a message!", timeout = 3000, color = "black") {
+  snackbarRef.value?.show(text, timeout, color);
+};
 let messageList = ref([]);
 let submitForm = reactive({
   nickname: "",
@@ -148,25 +160,90 @@ const getMessages = (sort = "likes", limit = 20, offset = 0, showUnaudited = fal
       if (rdata.status == 200) {
         messageList.value = rdata.data.data;
       } else {
-        snackbar.add({
-          type: "error",
-          text: rdata.data.msg,
-          duration: 3000,
-        });
+        snackbar(rdata.data.msg);
       }
     },
     function (error) {
-      snackbar.add({
-        type: "error",
-        text: error.message,
-        duration: 3000,
-      });
+      snackbar(error.message);
     }
   );
 };
 getMessages();
 
-const send = () => {};
-const like = () => {};
-const report = () => {};
+const send = () => {
+  getCaptcha(function (token, timestamp) {
+    requestApi(
+      "/messages",
+      {
+        token: token,
+        timestamp: timestamp,
+      },
+      "post",
+      {},
+      {
+        nickname: submitForm.nickname,
+        email: submitForm.email,
+        message: submitForm.message,
+      },
+      function (rdata) {
+        snackbar(rdata.data.msg);
+      },
+      function (error) {
+        snackbar(rdata.data.message);
+      }
+    );
+  });
+};
+
+const like = (e) => {
+  let messageId = e.currentTarget.dataset.messageId;
+  getCaptcha((token, timestamp) => {
+    requestApi(
+      `/messages/like/${messageId}`,
+      {
+        token: token,
+        timestamp: timestamp,
+      },
+      "post",
+      {},
+      {},
+      function (rdata) {
+        let messagesNew = [];
+        messageList.value.forEach((element) => {
+          if (element.id == messageId) {
+            element.likes = rdata.data.data.likes;
+          }
+          messagesNew.push(element);
+        });
+        snackbar(rdata.data.msg);
+        messageList.value = messagesNew;
+      },
+      function (error) {
+        snackbar(rdata.data.message);
+      }
+    );
+  });
+};
+
+const report = (e) => {
+  let messageId = e.currentTarget.dataset.messageId;
+  getCaptcha(function (token, timestamp) {
+    requestApi(
+      "/messages/report/" + messageId,
+      {
+        token: token,
+        timestamp: timestamp,
+      },
+      "post",
+      {},
+      {},
+      function (rdata) {
+        snackbar(rdata.data.msg);
+      },
+      function (error) {
+        snackbar(rdata.data.message);
+      }
+    );
+  });
+};
 </script>
