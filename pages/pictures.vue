@@ -19,7 +19,6 @@
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 0" v-slot="{ isHovering, props }">
             <v-card
-              @click="showOriginImage"
               :elevation="isHovering ? 12 : 1"
               v-bind="props"
               class="mb-2"
@@ -61,7 +60,6 @@
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 1" v-slot="{ isHovering, props }">
             <v-card
-              @click="showOriginImage"
               :elevation="isHovering ? 12 : 1"
               v-bind="props"
               class="mb-2"
@@ -144,8 +142,8 @@ const getImageLikes = () => {
     {},
     function (rdata) {
       if (rdata.data.code == 1) {
-        loadImage();
         likeList.value = rdata.data.data;
+        loadImage();
       }
     },
     function (error) {
