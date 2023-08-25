@@ -16,51 +16,91 @@
 
     <v-row v-if="imageList" style="max-width: 800px; margin: auto" dense>
       <v-col cols="6">
-        <div v-for="(picture, index) in pictureList">
-          <a
-            v-if="index % 2 === 0"
-            target="_blank"
-            :href="`${basePath.origin}/${picture}`"
-          >
-            <v-hover v-slot="{ isHovering, props }">
-              <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                <v-img
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                  v-bind:src="`${basePath.compression}/${picture}`"
-                  cover
-                >
-                  <v-card-title class="text-white">{{ picture }}</v-card-title>
-                </v-img>
-              </v-card>
-            </v-hover>
-          </a>
+        <div v-for="(item, index) in pictureList">
+          <v-hover v-if="index % 2 === 0" v-slot="{ isHovering, props }">
+            <v-card
+              @click="showOriginImage"
+              :elevation="isHovering ? 12 : 1"
+              v-bind="props"
+              class="mb-2"
+            >
+              <v-img
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                v-bind:src="`${basePath.compression}/${item.filename}`"
+                cover
+              >
+                <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
+                  <template v-slot:prepend>
+                    <v-card-title class="text-white">
+                      {{ item.filename
+                      }}<a
+                        title="Download this image"
+                        target="_blank"
+                        :href="`${basePath.origin}/${item.filename}`"
+                      >
+                        <v-btn color="white" icon="mdi-download-circle"></v-btn>
+                      </a>
+                    </v-card-title>
+                  </template>
+                  <template v-slot:append>
+                    {{ item.likes
+                    }}<v-btn
+                      @click="likeImage(item)"
+                      color="red"
+                      icon="mdi-heart"
+                    ></v-btn>
+                  </template>
+                </v-toolbar>
+              </v-img>
+            </v-card>
+          </v-hover>
         </div>
       </v-col>
       <v-col cols="6">
-        <div v-for="(picture, index) in pictureList">
-          <a
-            v-if="index % 2 === 1"
-            target="_blank"
-            :href="`${basePath.origin}/${picture}`"
-          >
-            <v-hover v-slot="{ isHovering, props }">
-              <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                <v-img
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                  v-bind:src="`${basePath.compression}/${picture}`"
-                  cover
-                >
-                  <v-card-title class="text-white">{{ picture }}</v-card-title>
-                </v-img>
-              </v-card>
-            </v-hover>
-          </a>
+        <div v-for="(item, index) in pictureList">
+          <v-hover v-if="index % 2 === 1" v-slot="{ isHovering, props }">
+            <v-card
+              @click="showOriginImage"
+              :elevation="isHovering ? 12 : 1"
+              v-bind="props"
+              class="mb-2"
+            >
+              <v-img
+                class="white--text align-end"
+                gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                v-bind:src="`${basePath.compression}/${item.filename}`"
+                cover
+              >
+                <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
+                  <template v-slot:prepend>
+                    <v-card-title class="text-white">
+                      {{ item.filename
+                      }}<a
+                        title="Download this image"
+                        target="_blank"
+                        :href="`${basePath.origin}/${item.filename}`"
+                      >
+                        <v-btn color="white" icon="mdi-download-circle"></v-btn>
+                      </a>
+                    </v-card-title>
+                  </template>
+                  <template v-slot:append>
+                    {{ item.likes
+                    }}<v-btn
+                      @click="likeImage(item)"
+                      color="red"
+                      icon="mdi-heart"
+                    ></v-btn>
+                  </template>
+                </v-toolbar>
+              </v-img>
+            </v-card>
+          </v-hover>
         </div>
       </v-col>
       <v-col cols="12" align="center" justify="center">
-        <v-btn @click="loadImage">Load More</v-btn>
+        <v-btn style="margin: 40px" @click="loadImage">Load More</v-btn>
       </v-col>
     </v-row>
     <v-row v-else class="fill-height ma-0" align="center" justify="center">
@@ -80,6 +120,7 @@ import { ref } from "vue";
 
 let pictureList = ref([]);
 let imageList = ref(null);
+let likeList = ref({});
 let basePath = reactive({ compression: "", origin: "" });
 const getImageList = () => {
   fetch("https://img-1.llilii.cn/imglist/kagamine.json")
@@ -88,16 +129,66 @@ const getImageList = () => {
       imageList.value = data;
       basePath.origin = data.base_url.origin.private;
       basePath.compression = data.base_url.compression.private;
+      getImageLikes();
     })
     .catch((error) => console.log(error));
 };
 getImageList();
 
+const getImageLikes = () => {
+  requestApi(
+    "/likes",
+    false,
+    "get",
+    {},
+    {},
+    function (rdata) {
+      if (rdata.data.code == 1) {
+        loadImage();
+        likeList.value = rdata.data.data;
+      }
+    },
+    function (error) {
+      snackbar(error.message);
+    }
+  );
+};
+
+const getLikeName = (name) => {
+  return `${name.split(".")[0].split("_")[0]}/${
+    name.split(".")[0].split("_")[1].split("p")[1]
+  }`;
+};
+
 const loadImage = () => {
   for (let index = 0; index < 10; index++) {
     let imageNum = randomNumBoth(0, imageList.value.filename.length);
     let imageFilename = imageList.value.filename[imageNum];
-    pictureList.value.push(imageFilename);
+    pictureList.value.push({
+      filename: imageFilename,
+      likes: likeList.value[imageFilename.split(".")[0]]
+        ? likeList.value[imageFilename.split(".")[0]]
+        : 0,
+    });
   }
+};
+
+const likeImage = (item) => {
+  let reqPath = getLikeName(item.filename);
+  requestApi(
+    `/likes/${reqPath}`,
+    false,
+    "post",
+    {},
+    {},
+    function (rdata) {
+      if (rdata.data.code == 1) {
+        item.likes = rdata.data.data.likes;
+      }
+    },
+    function (error) {
+      snackbar(error.message);
+    }
+  );
 };
 </script>
