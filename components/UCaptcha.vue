@@ -170,7 +170,7 @@ export default {
               showIcon.value = true;
               iconName.value = "close-circle";
               iconColor.value = "red";
-	              subTitle.value = "抱歉，获取安全验证信息失败，请重试！";
+              subTitle.value = "抱歉，获取安全验证信息失败，请重试！";
               snackbar({
                 type: "error",
                 text: error.message,
@@ -181,7 +181,7 @@ export default {
             showIcon.value = true;
             iconName.value = "close-circle";
             iconColor.value = "red";
-	            subTitle.value = "抱歉，获取安全验证信息失败，请重试！";
+            subTitle.value = "抱歉，获取安全验证信息失败，请重试！";
             snackbar({
               type: "error",
               text: error.message,
@@ -204,13 +204,14 @@ export default {
         });
         if (rdata.data.code == 1) {
           captchaImages.value = [];
-	          captchaText.value = "通过验证！正在进行下一步操作...请稍后...";
+          captchaText.value = "通过验证！正在进行下一步操作...请稍后...";
           captchaMain.value = false;
-	          subTitle.value = "通过验证！正在进行下一步操作...请稍后...";
+          subTitle.value = "通过验证！正在进行下一步操作...请稍后...";
           showIcon.value = true;
           iconName.value = "check";
           iconColor.value = "green";
           showCaptcha.value = false;
+          showSnackbar.value = false;
           callbackSuccess.value(rdata.data.data.token, rdata.data.data.timestamp);
         } else {
           getCaptcha(false);
@@ -254,13 +255,14 @@ export default {
           captchaMain.value = true;
         } else if (rdata.status == 201) {
           captchaImages.value = [];
-	          captchaText.value = "已经自动通过验证！";
+          captchaText.value = "已经自动通过验证！";
           captchaMain.value = false;
-	          subTitle.value = "当前环境安全！已自动通过安全验证！";
+          subTitle.value = "当前环境安全！已自动通过安全验证！";
           showIcon.value = true;
           iconName.value = "check";
           iconColor.value = "green";
           showCaptcha.value = false;
+          showSnackbar.value = false;
           callbackSuccess.value(rdata.data.data.token, rdata.data.data.timestamp);
         }
       });
