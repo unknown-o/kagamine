@@ -135,7 +135,7 @@
               </v-hover>
             </router-link>
             <v-hover v-slot="{ isHovering, props }">
-              <a target="_blank" href="https://static-1.llilii.cn/web-app/kagamine-tap">
+              <a target="_blank" href="https://static-1.llilii.cn/web-app/kagamine-tap/">
                 <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
                   <v-img
                     class="white--text align-end"
