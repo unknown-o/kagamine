@@ -61,4 +61,11 @@ export const formatDate = (value: number) => {
     return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s;
 }
 
+export const randomNumBoth = (min: number, max: number) => {
+    var range = max - min;
+    var rand = Math.random();
+    var num = min + Math.round(rand * range);
+    return num;
+}
+
 export default defineNuxtPlugin(() => { })
