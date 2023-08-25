@@ -94,7 +94,7 @@
             </a>
             <v-row dense>
               <v-col cols="6" xs="12">
-                <router-link to="messages/">
+                <router-link to="messages">
                   <v-hover v-slot="{ isHovering, props }">
                     <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
                       <v-img
@@ -110,7 +110,7 @@
                 </router-link>
               </v-col>
               <v-col cols="6" xs="12">
-                <router-link to="videos/">
+                <router-link to="videos">
                   <v-hover v-slot="{ isHovering, props }">
                     <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
                       <v-img
@@ -128,7 +128,7 @@
             </v-row>
           </v-col>
           <v-col cols="12" sm="12" md="6" lg="6">
-            <router-link to="pictures/">
+            <router-link to="pictures">
               <v-hover v-slot="{ isHovering, props }">
                 <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
                   <v-img
