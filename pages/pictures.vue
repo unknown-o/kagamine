@@ -14,15 +14,11 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="imageList" style="max-width: 800px; margin: auto" dense>
+    <v-row v-if="imageList && likeList" style="max-width: 800px; margin: auto" dense>
       <v-col cols="6">
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 0" v-slot="{ isHovering, props }">
-            <v-card
-              :elevation="isHovering ? 12 : 1"
-              v-bind="props"
-              class="mb-2"
-            >
+            <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
               <v-img
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
@@ -59,11 +55,7 @@
       <v-col cols="6">
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 1" v-slot="{ isHovering, props }">
-            <v-card
-              :elevation="isHovering ? 12 : 1"
-              v-bind="props"
-              class="mb-2"
-            >
+            <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
               <v-img
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
@@ -118,7 +110,7 @@ import { ref } from "vue";
 
 let pictureList = ref([]);
 let imageList = ref(null);
-let likeList = ref({});
+let likeList = ref(null);
 let basePath = reactive({ compression: "", origin: "" });
 const getImageList = () => {
   fetch("https://img-1.llilii.cn/imglist/kagamine.json")
