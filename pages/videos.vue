@@ -53,8 +53,7 @@
                 autoplay
                 preload
                 controls
-                width="100%"
-                height="100%"
+                style="width: 100%; height: 100%"
                 :src="currentVideoUrl"
                 poster="https://img-1.llilii.cn/compression/vocaloid/kagamine/63932635_p0.jpg"
               ></video>
