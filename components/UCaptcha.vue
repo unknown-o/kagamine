@@ -220,6 +220,8 @@ export default {
     }
 
     function getCaptcha(callback: any) {
+      captchaText.value = "获取验证信息中...";
+      subTitle.value = "您需要通过安全验证后才能继续操作，请按照提示执行操作。";
       if (typeof callback == "function") {
         callbackSuccess.value = callback;
       }
