@@ -47,14 +47,6 @@
               <h2>想要联系作者？</h2>
               <v-divider class="mb-4 ma-4 justify"></v-divider>
               <p>
-                Github：<a
-                  class="text-accent"
-                  target="_blank"
-                  href="https://github.com/unknown-o/kagamine"
-                  >unknown-o/kagamine</a
-                >
-              </p>
-              <p>
                 作者邮箱：<a class="text-accent" target="_blank" href="mailto:i@mr-wu.top"
                   >i@mr-wu.top</a
                 >
