@@ -69,14 +69,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch, onMounted } from "vue";
+import { ref, reactive } from "vue";
 import { requestApi } from "../plugins/common";
 import UCaptcha from "../components/UCaptcha.vue";
 import VuetifySnackbar from "../components/VuetifySnackbar.vue";
 const videoPlayer = ref();
-onMounted(() => {
-  videoPlayer.value = document.getElementById("video-player") as any;
-});
 let captchaRef = ref();
 let snackbarRef = ref();
 const getCaptcha = function (callback: any) {
