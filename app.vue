@@ -1,7 +1,7 @@
 <template>
   <NuxtPage />
 
-  <p style="margin: 40px; text-align: center">
+  <p style="margin: 40px; text-align: center; font-size: 8px">
     <a
       style="color: black"
       href="https://beian.miit.gov.cn/"
