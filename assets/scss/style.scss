@@ -1,1 +1,14 @@
 @use "vuetify/styles";
+
+@font-face {
+    font-family: 'zcoolcrlyt';
+    src: url("../fonts/zcoolcrlyt.ttf")
+}
+
+body {
+    font-family: 'zcoolcrlyt';
+}
+
+a {
+    text-decoration: none;
+}
