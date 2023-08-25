@@ -1,7 +1,12 @@
 <template>
+  <script
+    async
+    src="https://analysis.llilii.cn/script.js"
+    data-website-id="a1f454da-8122-4c78-9125-33823e28f225"
+  ></script>
   <NuxtPage />
 
-  <p style="margin: 40px; text-align: center;">
+  <p style="margin: 40px; text-align: center">
     <a
       style="color: black"
       href="https://beian.miit.gov.cn/"
