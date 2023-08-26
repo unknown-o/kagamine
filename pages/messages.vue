@@ -186,6 +186,11 @@ const send = () => {
         message: submitForm.message,
       },
       function (rdata) {
+        if (rdata.data.code == 1) {
+          submitForm.nickname = "";
+          submitForm.email = "";
+          submitForm.message = "";
+        }
         snackbar(rdata.data.msg);
       },
       function (error) {
