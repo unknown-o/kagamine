@@ -44,7 +44,7 @@
           </v-card>
         </v-hover>
       </v-col>
-      <v-col cols="12" xs="12" sm="6" lg="7">
+      <v-col cols="12" xs="12" sm="8" lg="7">
         <v-hover v-slot="{ isHovering, props }">
           <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
             <v-card-text>
