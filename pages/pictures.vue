@@ -27,16 +27,16 @@
               >
                 <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
                   <template v-slot:prepend>
-                    <v-card-title class="text-white">
-                      {{ item.filename
-                      }}<a
-                        title="Download this image"
-                        target="_blank"
-                        :href="`${basePath.origin}/${item.filename}`"
-                      >
-                        <v-btn color="white" icon="mdi-download-circle"></v-btn>
-                      </a>
-                    </v-card-title>
+                    <a
+                      title="Download this image"
+                      target="_blank"
+                      :href="`${basePath.origin}/${item.filename}`"
+                    >
+                      <v-btn color="white" icon="mdi-download-circle"></v-btn>
+                    </a>
+                    <div class="hidden-xs" style="display: inline">
+                      {{ item.filename }}
+                    </div>
                   </template>
                   <template v-slot:append>
                     {{ item.likes
@@ -64,16 +64,16 @@
               >
                 <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
                   <template v-slot:prepend>
-                    <v-card-title class="text-white">
-                      {{ item.filename
-                      }}<a
-                        title="Download this image"
-                        target="_blank"
-                        :href="`${basePath.origin}/${item.filename}`"
-                      >
-                        <v-btn color="white" icon="mdi-download-circle"></v-btn>
-                      </a>
-                    </v-card-title>
+                    <a
+                      title="Download this image"
+                      target="_blank"
+                      :href="`${basePath.origin}/${item.filename}`"
+                    >
+                      <v-btn color="white" icon="mdi-download-circle"></v-btn>
+                    </a>
+                    <div class="hidden-xs" style="display: inline">
+                      {{ item.filename }}
+                    </div>
                   </template>
                   <template v-slot:append>
                     {{ item.likes
@@ -182,3 +182,11 @@ const likeImage = (item) => {
   );
 };
 </script>
+
+<style>
+@media screen and (max-width: 768px) {
+  .hidden-xs {
+    display: none;
+  }
+}
+</style>
