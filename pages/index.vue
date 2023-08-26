@@ -79,7 +79,7 @@
                     src="https://img-1.llilii.cn/compression/vocaloid/kagamine/47787519_p0.jpg"
                     cover
                   >
-                    <v-card-title class="text-white">萌娘百科</v-card-title>
+                    <v-card-title class="text-white">MOE WIKI</v-card-title>
                   </v-img>
                 </v-card>
               </v-hover>
@@ -95,7 +95,7 @@
                         src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p0.jpg"
                         cover
                       >
-                        <v-card-title class="text-white">留言墙</v-card-title>
+                        <v-card-title class="text-white">MESSAGES</v-card-title>
                       </v-img>
                     </v-card>
                   </v-hover>
@@ -111,7 +111,7 @@
                         src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p1.jpg"
                         cover
                       >
-                        <v-card-title class="text-white">视频合集</v-card-title>
+                        <v-card-title class="text-white">VIDEOS</v-card-title>
                       </v-img>
                     </v-card>
                   </v-hover>
@@ -129,7 +129,7 @@
                     src="https://img-1.llilii.cn/compression/vocaloid/kagamine/83375625_p0.png"
                     cover
                   >
-                    <v-card-title class="text-white">图片墙</v-card-title>
+                    <v-card-title class="text-white">PICTURES</v-card-title>
                   </v-img>
                 </v-card>
               </v-hover>

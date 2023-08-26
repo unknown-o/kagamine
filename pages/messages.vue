@@ -20,7 +20,7 @@
           <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
             <v-card-text>
               <div class="ma-3 justify">
-                <h2>提交留言</h2>
+                <h2>LEAVE A MESSAGE</h2>
                 <v-divider class="my-4 justify"></v-divider>
                 <v-text-field
                   label="Your Nickname..."
@@ -42,7 +42,7 @@
               </div>
             </v-card-text>
             <v-card-actions class="justify-end">
-              <v-btn class="ma-3" @click="send">发射！</v-btn>
+              <v-btn class="ma-3" @click="send">SEND</v-btn>
             </v-card-actions>
           </v-card>
         </v-hover>
@@ -51,12 +51,12 @@
           <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
             <v-card-text>
               <div class="ma-3 justify">
-                <h2>显示设置</h2>
+                <h2>DISPLAY SETTINGS</h2>
                 <v-divider class="my-4 justify"></v-divider>
                 <v-select
                   v-model="sortValue"
                   :items="sortText"
-                  label="排序方式"
+                  label="SORT BY"
                 ></v-select>
               </div>
             </v-card-text>
