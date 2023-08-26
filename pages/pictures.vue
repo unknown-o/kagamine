@@ -102,15 +102,18 @@
       ></v-progress-circular>
     </v-row>
   </v-container>
+  <VuetifySnackbar ref="snackbarRef"></VuetifySnackbar>
 </template>
 
 <script lang="ts" setup>
 import { requestApi, randomNumBoth } from "../plugins/common";
 import { ref } from "vue";
+import VuetifySnackbar from "../components/VuetifySnackbar.vue";
 
 let pictureList = ref([]);
 let imageList = ref(null);
 let likeList = ref(null);
+let snackbarRef = ref();
 let basePath = reactive({ compression: "", origin: "" });
 const getImageList = () => {
   fetch("https://img-1.llilii.cn/imglist/kagamine.json")
@@ -122,6 +125,9 @@ const getImageList = () => {
       getImageLikes();
     })
     .catch((error) => console.log(error));
+};
+const snackbar = function (text = "this is a message!", timeout = 3000, color = "black") {
+  snackbarRef.value?.show(text, timeout, color);
 };
 getImageList();
 
@@ -172,6 +178,7 @@ const likeImage = (item) => {
     {},
     {},
     function (rdata) {
+      snackbar(rdata.data.msg);
       if (rdata.data.code == 1) {
         item.likes = rdata.data.data.likes;
       }

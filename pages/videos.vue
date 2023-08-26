@@ -120,7 +120,7 @@ const playVideo = () => {
         {},
         { path: videoInfo.value.path },
         function (rdata) {
-          if (rdata.status == 200) {
+          if (rdata.data.code == 1) {
             currentVideoUrl.value = `${nodeInfo.value.base_url}${videoInfo.value.path}?token=${rdata.data.data.token}&timestamp=${rdata.data.data.timestamp}`;
           } else {
             snackbar(rdata.data.msg);

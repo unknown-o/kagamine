@@ -157,7 +157,7 @@ const getMessages = (sort = "likes", limit = 20, offset = 0, showUnaudited = fal
     },
     {},
     function (rdata) {
-      if (rdata.status == 200) {
+      if (rdata.data.code == 1) {
         messageList.value = rdata.data.data;
       } else {
         snackbar(rdata.data.msg);
@@ -208,15 +208,17 @@ const like = (e) => {
       {},
       {},
       function (rdata) {
-        let messagesNew = [];
-        messageList.value.forEach((element) => {
-          if (element.id == messageId) {
-            element.likes = rdata.data.data.likes;
-          }
-          messagesNew.push(element);
-        });
+        if (rdata.data.code == 1) {
+          let messagesNew = [];
+          messageList.value.forEach((element) => {
+            if (element.id == messageId) {
+              element.likes = rdata.data.data.likes;
+            }
+            messagesNew.push(element);
+          });
+          messageList.value = messagesNew;
+        }
         snackbar(rdata.data.msg);
-        messageList.value = messagesNew;
       },
       function (error) {
         snackbar(rdata.data.message);
