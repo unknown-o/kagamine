@@ -1,5 +1,5 @@
 <template>
-  <title>MessageBoard - KagamineFans</title>
+  <title>Messages - KagamineFans</title>
   <v-container>
     <v-row dense>
       <v-col cols="12" xs="12" sm="6" md="5" lg="5" offset-lg="1">
@@ -9,7 +9,7 @@
               <v-icon size="25">mdi-arrow-left</v-icon>
             </v-btn>
           </router-link>
-          MessageBoard
+          Messages
         </h1>
       </v-col>
     </v-row>
