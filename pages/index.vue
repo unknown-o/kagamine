@@ -15,7 +15,7 @@
               <v-divider class="mb-4 ma-4 justify"></v-divider>
               <p>
                 欢迎来到镜音的小窝！本站由一位Kagamine
-                Fans建立！欢迎访问“图片墙”、“留言板”等板块更详细的了解镜音
+                Fans建立！欢迎访问“图片墙”等板块更详细的了解镜音
               </p>
               <p>
                 镜音连是一位从后方短短的竖起金发、和以印有低音谱号的校服为主体服装的少年，他声音铿锵有力且富有青春期少年特有的活力
@@ -86,8 +86,8 @@
             </a>
             <v-row dense>
               <v-col cols="6" xs="12">
-                <router-link to="messages">
-                  <v-hover v-slot="{ isHovering, props }">
+                <v-tooltip text="根据相关法律法规，留言板功能不开放" location="bottom">
+                  <template v-slot:activator="{ props }">
                     <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
                       <v-img
                         class="white--text align-end"
@@ -98,8 +98,8 @@
                         <v-card-title class="text-white">MESSAGES</v-card-title>
                       </v-img>
                     </v-card>
-                  </v-hover>
-                </router-link>
+                  </template>
+                </v-tooltip>
               </v-col>
               <v-col cols="6" xs="12">
                 <router-link to="videos">
