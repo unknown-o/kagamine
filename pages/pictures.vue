@@ -19,19 +19,11 @@
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 0" v-slot="{ isHovering, props }">
             <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-              <v-img
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                v-bind:src="`${basePath.compression}/${item.filename}`"
-                cover
-              >
+              <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                v-bind:src="`${basePath.compression}/${item.filename}`" cover>
                 <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
                   <template v-slot:prepend>
-                    <a
-                      title="Download this image"
-                      target="_blank"
-                      :href="`${basePath.origin}/${item.filename}`"
-                    >
+                    <a title="Download this image" target="_blank" :href="`${basePath.origin}/${item.filename}`">
                       <v-btn color="white" icon="mdi-download-circle"></v-btn>
                     </a>
                     <div class="hidden-xs" style="display: inline">
@@ -40,11 +32,7 @@
                   </template>
                   <template v-slot:append>
                     {{ item.likes
-                    }}<v-btn
-                      @click="likeImage(item)"
-                      color="red"
-                      icon="mdi-heart"
-                    ></v-btn>
+                    }}<v-btn @click="likeImage(item)" color="red" icon="mdi-heart"></v-btn>
                   </template>
                 </v-toolbar>
               </v-img>
@@ -56,19 +44,11 @@
         <div v-for="(item, index) in pictureList">
           <v-hover v-if="index % 2 === 1" v-slot="{ isHovering, props }">
             <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-              <v-img
-                class="white--text align-end"
-                gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                v-bind:src="`${basePath.compression}/${item.filename}`"
-                cover
-              >
+              <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                v-bind:src="`${basePath.compression}/${item.filename}`" cover>
                 <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
                   <template v-slot:prepend>
-                    <a
-                      title="Download this image"
-                      target="_blank"
-                      :href="`${basePath.origin}/${item.filename}`"
-                    >
+                    <a title="Download this image" target="_blank" :href="`${basePath.origin}/${item.filename}`">
                       <v-btn color="white" icon="mdi-download-circle"></v-btn>
                     </a>
                     <div class="hidden-xs" style="display: inline">
@@ -77,11 +57,7 @@
                   </template>
                   <template v-slot:append>
                     {{ item.likes
-                    }}<v-btn
-                      @click="likeImage(item)"
-                      color="red"
-                      icon="mdi-heart"
-                    ></v-btn>
+                    }}<v-btn @click="likeImage(item)" color="red" icon="mdi-heart"></v-btn>
                   </template>
                 </v-toolbar>
               </v-img>
@@ -94,18 +70,13 @@
       </v-col>
     </v-row>
     <v-row v-else class="fill-height ma-0" align="center" justify="center">
-      <v-progress-circular
-        style="height: 60vh"
-        :size="50"
-        color="amber"
-        indeterminate
-      ></v-progress-circular>
+      <v-progress-circular style="height: 60vh" :size="50" color="amber" indeterminate></v-progress-circular>
     </v-row>
   </v-container>
   <VuetifySnackbar ref="snackbarRef"></VuetifySnackbar>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { requestApi, randomNumBoth } from "../plugins/common";
 import { ref } from "vue";
 import VuetifySnackbar from "../components/VuetifySnackbar.vue";
@@ -145,15 +116,16 @@ const getImageLikes = () => {
       }
     },
     function (error) {
+      likeList.value = [];
+      loadImage();
       snackbar(error.message);
     }
   );
 };
 
 const getLikeName = (name) => {
-  return `${name.split(".")[0].split("_")[0]}/${
-    name.split(".")[0].split("_")[1].split("p")[1]
-  }`;
+  return `${name.split(".")[0].split("_")[0]}/${name.split(".")[0].split("_")[1].split("p")[1]
+    }`;
 };
 
 const loadImage = () => {

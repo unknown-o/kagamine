@@ -114,14 +114,14 @@
   <VuetifySnackbar ref="snackbarRef"></VuetifySnackbar>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { requestApi, formatDate } from "../plugins/common";
 import { ref, reactive, watch } from "vue";
 import UCaptcha from "../components/UCaptcha.vue";
 import VuetifySnackbar from "../components/VuetifySnackbar.vue";
 let captchaRef = ref();
 let snackbarRef = ref();
-const getCaptcha = function (callback: any) {
+const getCaptcha = function (callback) {
   captchaRef.value?.getCaptcha(callback);
 };
 const snackbar = function (text = "this is a message!", timeout = 3000, color = "black") {

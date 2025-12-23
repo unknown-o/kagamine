@@ -37,9 +37,7 @@
                   <p>更多功能正在努力的开发中哦！</p>
                 </v-col>
                 <v-col cols="5" md="4" lg="3">
-                  <v-img
-                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/73611134_p7.jpg"
-                  >
+                  <v-img src="https://img-1.llilii.cn/compression/vocaloid/kagamine/73611134_p7.jpg">
                   </v-img>
                 </v-col>
               </v-row>
@@ -47,17 +45,10 @@
               <h2>想要联系作者？</h2>
               <v-divider class="mb-4 ma-4 justify"></v-divider>
               <p>
-                作者邮箱：<a class="text-accent" target="_blank" href="mailto:i@mr-wu.top"
-                  >i@mr-wu.top</a
-                >
+                作者邮箱：<a class="text-accent" target="_blank" href="mailto:i@mr-wu.top">i@mr-wu.top</a>
               </p>
               <p>
-                作者博客：<a
-                  class="text-accent"
-                  target="_blank"
-                  href="https://www.wunote.cn"
-                  >某咸鱼的笔记</a
-                >
+                作者博客：<a class="text-accent" target="_blank" href="https://www.wunote.cn">某咸鱼的笔记</a>
               </p>
             </v-card-text>
           </v-card>
@@ -66,19 +57,12 @@
       <v-col cols="12" xs="12" sm="6" md="7" lg="6">
         <v-row dense>
           <v-col cols="12" sm="12" md="6" lg="6">
-            <a
-              target="_blank"
-              ref="nofollow"
-              href="https://mzh.moegirl.org.cn/%E9%95%9C%E9%9F%B3%E9%93%83%C2%B7%E8%BF%9E"
-            >
+            <a target="_blank" ref="nofollow"
+              href="https://mzh.moegirl.org.cn/%E9%95%9C%E9%9F%B3%E9%93%83%C2%B7%E8%BF%9E">
               <v-hover v-slot="{ isHovering, props }">
                 <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                  <v-img
-                    class="white--text align-end"
-                    gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/47787519_p0.jpg"
-                    cover
-                  >
+                  <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/47787519_p0.jpg" cover>
                     <v-card-title class="text-white">MOE WIKI</v-card-title>
                   </v-img>
                 </v-card>
@@ -87,17 +71,15 @@
             <v-row dense>
               <v-col cols="6" xs="12">
                 <v-tooltip text="根据相关法律法规，留言板功能不开放" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                      <v-img
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                        src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p0.jpg"
-                        cover
-                      >
-                        <v-card-title class="text-white">MESSAGES</v-card-title>
-                      </v-img>
-                    </v-card>
+                  <template>
+                    <v-hover v-slot="{ isHovering, props }">
+                      <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
+                        <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                          src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p0.jpg" cover>
+                          <v-card-title class="text-white">MESSAGES</v-card-title>
+                        </v-img>
+                      </v-card>
+                    </v-hover>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -105,12 +87,8 @@
                 <router-link to="videos">
                   <v-hover v-slot="{ isHovering, props }">
                     <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                      <v-img
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                        src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p1.jpg"
-                        cover
-                      >
+                      <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                        src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p1.jpg" cover>
                         <v-card-title class="text-white">VIDEOS</v-card-title>
                       </v-img>
                     </v-card>
@@ -123,12 +101,8 @@
             <router-link to="pictures">
               <v-hover v-slot="{ isHovering, props }">
                 <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                  <v-img
-                    class="white--text align-end"
-                    gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/83375625_p0.png"
-                    cover
-                  >
+                  <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/83375625_p0.png" cover>
                     <v-card-title class="text-white">PICTURES</v-card-title>
                   </v-img>
                 </v-card>
@@ -137,12 +111,8 @@
             <v-hover v-slot="{ isHovering, props }">
               <a target="_blank" href="https://static-1.llilii.cn/web-app/kagamine-tap/">
                 <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                  <v-img
-                    class="white--text align-end"
-                    gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/74444007_p0.jpg"
-                    cover
-                  >
+                  <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                    src="https://img-1.llilii.cn/compression/vocaloid/kagamine/74444007_p0.jpg" cover>
                     <v-card-title class="text-white">KAGAMINE-TAP</v-card-title>
                   </v-img>
                 </v-card>
