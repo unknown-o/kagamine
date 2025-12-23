@@ -70,18 +70,16 @@
             </a>
             <v-row dense>
               <v-col cols="6" xs="12">
-                <v-tooltip text="根据相关法律法规，留言板功能不开放" location="bottom">
-                  <template>
-                    <v-hover v-slot="{ isHovering, props }">
-                      <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
-                        <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
-                          src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p0.jpg" cover>
-                          <v-card-title class="text-white">MESSAGES</v-card-title>
-                        </v-img>
-                      </v-card>
-                    </v-hover>
-                  </template>
-                </v-tooltip>
+                <router-link to="messages">
+                  <v-hover v-slot="{ isHovering, props }">
+                    <v-card :elevation="isHovering ? 12 : 1" v-bind="props" class="mb-2">
+                      <v-img class="white--text align-end" gradient="to bottom, rgba(0,0,0,0.0), rgba(0,0,0,0.4)"
+                        src="https://img-1.llilii.cn/compression/vocaloid/kagamine/53659035_p0.jpg" cover>
+                        <v-card-title class="text-white">MESSAGES</v-card-title>
+                      </v-img>
+                    </v-card>
+                  </v-hover>
+                </router-link>
               </v-col>
               <v-col cols="6" xs="12">
                 <router-link to="videos">
