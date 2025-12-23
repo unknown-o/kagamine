@@ -1,63 +1,10 @@
-# Nuxt 3 Minimal Starter
+# 镜音的小窝
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+欢迎来到镜音的小窝！本站由一位Kagamine Fans建立！欢迎访问“图片墙”等板块更详细的了解镜音  
+镜音连是一位从后方短短的竖起金发、和以印有低音谱号的校服为主体服装的少年，他声音铿锵有力且富有青春期少年特有的活力  
+镜音铃有着活力四射、俏丽动人的歌喉，带有大蝴蝶结的金发波波头，和以印有高音谱号的校服为主题的服装的少女  
+镜音双子的称法已经被粉丝和部分创作者默认。但是“镜音双子”的说法属于二次设定，官方没有说明两人的关系。因此，铃与连在同人设定中的关系根据同人创作者的意愿决定，既可以被称为兄妹、姐弟，在cp向的作品里也会被当作恋人。 注意：在不同设定下刷其他同人设定是不礼貌的行为哦！
 
-## Setup
-
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 鸣谢
+![](/assets/images/aliyun-esa.png)
+本项目由阿里云ESA提供加速、计算和保护
